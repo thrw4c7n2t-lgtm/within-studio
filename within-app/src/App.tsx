@@ -1,35 +1,48 @@
 import "./App.css";
 
 function App() {
-  const tools = [
-    ["📚", "Book Creator", "Build personalised therapy books and printable journals."],
-    ["🌿", "Explorer Collection", "Nature-based resources for children’s emotions, confidence and regulation."],
-    ["👨‍👩‍👧", "Parent Guides", "Gentle handouts and reflection tools for families."],
-    ["🎨", "Resource Library", "Worksheets, cards, prompts, activities and visual supports."],
+  const modules = [
+    ["🏡", "Dashboard", "Overview and quick actions"],
+    ["📚", "Book Creator", "Build personalised therapy books"],
+    ["🌿", "Explorer Collection", "Child-friendly nature-based resources"],
+    ["👨‍👩‍👧", "Parent Guides", "Family handouts and reflection tools"],
+    ["🎨", "Resource Library", "Worksheets, cards and activities"],
+    ["⚙️", "Settings", "Brand and export settings"],
   ];
 
   return (
     <div className="app">
-      <section className="hero">
-        <h1>Within</h1>
-        <p>
-          A calm creative studio for building therapeutic books, family resources,
-          printable tools and gentle learning experiences.
-        </p>
-      </section>
-
-      <section className="grid">
-        {tools.map(([icon, title, text]) => (
-          <div className="card" key={title}>
-            <h2>{icon} {title}</h2>
-            <p>{text}</p>
-          </div>
+      <aside className="sidebar">
+        <h2>Within</h2>
+        {modules.map(([icon, title]) => (
+          <button key={title} className="navButton">
+            <span>{icon}</span>
+            {title}
+          </button>
         ))}
-      </section>
+      </aside>
 
-      <footer className="footer">
-        Within Studio · Version 1
-      </footer>
+      <main className="main">
+        <section className="welcome">
+          <p className="eyebrow">Within Studio</p>
+          <h1>What would you like to create today?</h1>
+          <p>
+            Build therapeutic books, family resources, printable tools and gentle
+            learning experiences from one calm creative workspace.
+          </p>
+        </section>
+
+        <section className="moduleGrid">
+          {modules.slice(1).map(([icon, title, text]) => (
+            <div className="moduleCard" key={title}>
+              <div className="icon">{icon}</div>
+              <h3>{title}</h3>
+              <p>{text}</p>
+              <button>Open</button>
+            </div>
+          ))}
+        </section>
+      </main>
     </div>
   );
 }
