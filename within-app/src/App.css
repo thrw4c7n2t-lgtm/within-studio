@@ -120,3 +120,6 @@ body {
   border-radius: 999px;
   cursor: pointer;
 }
+.navButton.active {
+  background: rgba(255, 255, 255, 0.18);
+}

@@ -1,21 +1,38 @@
+import { useState } from "react";
 import "./App.css";
 
 function App() {
+  const [active, setActive] = useState("Dashboard");
+
   const modules = [
-    ["🏡", "Dashboard", "Overview and quick actions"],
-    ["📚", "Book Creator", "Build personalised therapy books"],
-    ["🌿", "Explorer Collection", "Child-friendly nature-based resources"],
-    ["👨‍👩‍👧", "Parent Guides", "Family handouts and reflection tools"],
-    ["🎨", "Resource Library", "Worksheets, cards and activities"],
-    ["⚙️", "Settings", "Brand and export settings"],
+    ["🏡", "Dashboard"],
+    ["📚", "Book Creator"],
+    ["🌿", "Explorer Collection"],
+    ["👨‍👩‍👧", "Parent Guides"],
+    ["🎨", "Resource Library"],
+    ["⚙️", "Settings"],
   ];
+
+  const screenText: Record<string, string> = {
+    Dashboard: "Your calm creative home base for Within.",
+    "Book Creator": "Build personalised therapeutic books and printable journals.",
+    "Explorer Collection": "Nature-based resources for children’s emotions, regulation and confidence.",
+    "Parent Guides": "Gentle family handouts, scripts and reflection tools.",
+    "Resource Library": "Worksheets, cards, prompts, activities and visual supports.",
+    Settings: "Brand colours, export settings and future account options.",
+  };
 
   return (
     <div className="app">
       <aside className="sidebar">
         <h2>Within</h2>
+
         {modules.map(([icon, title]) => (
-          <button key={title} className="navButton">
+          <button
+            key={title}
+            className={active === title ? "navButton active" : "navButton"}
+            onClick={() => setActive(title)}
+          >
             <span>{icon}</span>
             {title}
           </button>
@@ -25,22 +42,21 @@ function App() {
       <main className="main">
         <section className="welcome">
           <p className="eyebrow">Within Studio</p>
-          <h1>What would you like to create today?</h1>
-          <p>
-            Build therapeutic books, family resources, printable tools and gentle
-            learning experiences from one calm creative workspace.
-          </p>
+          <h1>{active}</h1>
+          <p>{screenText[active]}</p>
         </section>
 
         <section className="moduleGrid">
-          {modules.slice(1).map(([icon, title, text]) => (
-            <div className="moduleCard" key={title}>
-              <div className="icon">{icon}</div>
-              <h3>{title}</h3>
-              <p>{text}</p>
-              <button>Open</button>
-            </div>
-          ))}
+          {modules
+            .filter(([, title]) => title !== "Dashboard")
+            .map(([icon, title]) => (
+              <div className="moduleCard" key={title}>
+                <div className="icon">{icon}</div>
+                <h3>{title}</h3>
+                <p>{screenText[title]}</p>
+                <button onClick={() => setActive(title)}>Open</button>
+              </div>
+            ))}
         </section>
       </main>
     </div>
