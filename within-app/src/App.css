@@ -123,3 +123,41 @@ body {
 .navButton.active {
   background: rgba(255, 255, 255, 0.18);
 }
+.printPage {
+  background: #fffaf2;
+  border: 1px solid #eadfcd;
+  border-radius: 24px;
+  padding: 34px;
+  margin-bottom: 24px;
+  min-height: 520px;
+}
+
+.pageNumber {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #8b7d68;
+}
+
+.drawBox {
+  margin-top: 28px;
+  min-height: 180px;
+  border: 2px dashed #d6c6ad;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9a8b75;
+}
+
+@media print {
+  .printPage {
+    page-break-after: always;
+    border: none;
+    min-height: 100vh;
+  }
+
+  .bookPreview {
+    background: white;
+  }
+}

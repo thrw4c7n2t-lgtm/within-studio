@@ -17,19 +17,43 @@ function App() {
     { icon: "⚙️", title: "Settings" },
   ];
 
+  const name = childName || "Your child";
+  const guide = animal || "butterfly";
+
+  const pages = [
+    {
+      title: `${name}'s Explorer Journal`,
+      subtitle: `A gentle adventure about ${focus.toLowerCase()}`,
+      body: `Today, ${name} begins a journey through Within Valley with a wise little ${guide} guide.`,
+    },
+    {
+      title: "Explorer Check-In",
+      subtitle: "Before we begin",
+      body: "Circle or draw: How does your body feel today? What is your energy like? What feeling is visiting you?",
+    },
+    {
+      title: "Today's Mission",
+      subtitle: "Notice, name, support",
+      body: `When ${name} notices a big feeling, they can pause, breathe, name it, and choose one helpful next step.`,
+    },
+    {
+      title: "Reflection Page",
+      subtitle: "What did I learn?",
+      body: "Feelings are visitors. They can be noticed, named and gently supported. I do not need to fight them or hide them.",
+    },
+  ];
+
   return (
     <div className="app">
       <aside className="sidebar">
         <h2>Within</h2>
-
         {modules.map((module) => (
           <button
             key={module.title}
             className={active === module.title ? "navButton active" : "navButton"}
             onClick={() => setActive(module.title)}
           >
-            <span>{module.icon}</span>
-            {module.title}
+            <span>{module.icon}</span>{module.title}
           </button>
         ))}
       </aside>
@@ -42,7 +66,6 @@ function App() {
               <h1>What would you like to create today?</h1>
               <p>A calm creative workspace for therapeutic books, family resources and printable tools.</p>
             </section>
-
             <section className="moduleGrid">
               {modules.filter((m) => m.title !== "Dashboard").map((module) => (
                 <div className="moduleCard" key={module.title}>
@@ -61,7 +84,7 @@ function App() {
             <section className="welcome">
               <p className="eyebrow">Within Studio</p>
               <h1>Book Creator</h1>
-              <p>Create a personalised Explorer Collection therapy book preview.</p>
+              <p>Create a printable mini Explorer Collection workbook.</p>
             </section>
 
             <section className="creator">
@@ -84,35 +107,23 @@ function App() {
                 <label>Animal guide</label>
                 <input value={animal} onChange={(e) => setAnimal(e.target.value)} placeholder="e.g. frog, koala, owl" />
 
-                <button onClick={() => setGenerated(true)}>Generate Preview</button>
+                <button onClick={() => setGenerated(true)}>Generate Workbook</button>
+                {generated && <button onClick={() => window.print()}>Print Workbook</button>}
               </div>
 
               <div className="bookPreview">
-                <p className="eyebrow">Printable Preview</p>
-                <h2>{childName || "Your child"}'s Explorer Journal</h2>
-                <h3>A gentle adventure about {focus.toLowerCase()}</h3>
-
-                {generated ? (
-                  <>
-                    <p>
-                      Today, {childName || "your child"} begins a journey through Within Valley with a wise little{" "}
-                      {animal || "butterfly"} guide.
-                    </p>
-
-                    <div className="missionBox">
-                      <h4>Today's Mission</h4>
-                      <p>Notice one feeling in your body, give it a name, and draw where it lives.</p>
-                    </div>
-
-                    <div className="missionBox">
-                      <h4>Reflection</h4>
-                      <p>Feelings are visitors. They can be noticed, named and gently supported.</p>
-                    </div>
-
-                    <button onClick={() => window.print()}>Print Preview</button>
-                  </>
+                {!generated ? (
+                  <p>Fill in the form and click Generate Workbook.</p>
                 ) : (
-                  <p>Fill in the form and click Generate Preview.</p>
+                  pages.map((page, index) => (
+                    <div className="printPage" key={page.title}>
+                      <p className="pageNumber">Page {index + 1}</p>
+                      <h2>{page.title}</h2>
+                      <h3>{page.subtitle}</h3>
+                      <p>{page.body}</p>
+                      <div className="drawBox">Draw or write here</div>
+                    </div>
+                  ))
                 )}
               </div>
             </section>
