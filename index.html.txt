@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Within Studio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, serif;
+      background: #f5efe6;
+      color: #2f3a32;
+    }
+    header {
+      padding: 40px;
+      background: #d8c7ad;
+      text-align: center;
+    }
+    h1 {
+      font-size: 48px;
+      margin: 0;
+    }
+    .tagline {
+      font-size: 20px;
+      margin-top: 10px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+    .card {
+      background: white;
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    button {
+      background: #62745f;
+      color: white;
+      border: none;
+      padding: 14px 22px;
+      border-radius: 999px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    textarea, input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border-radius: 12px;
+      border: 1px solid #c8bda9;
+      font-size: 15px;
+    }
+    .output {
+      background: #fffaf2;
+      border: 1px dashed #a69b87;
+      padding: 24px;
+      margin: 40px;
+      border-radius: 24px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Within Studio</h1>
+  <div class="tagline">Create therapeutic books, activities and family resources.</div>
+</header>
+
+<section class="grid">
+  <div class="card">
+    <h2>📚 Book Creator</h2>
+    <p>Create a personalised Explorer Collection therapy book.</p>
+  </div>
+
+  <div class="card">
+    <h2>🌿 Explorer Collection</h2>
+    <p>Nature-based emotional wellbeing resources for children.</p>
+  </div>
+
+  <div class="card">
+    <h2>👨‍👩‍👧 Parent Resources</h2>
+    <p>Generate parent guides, handouts and reflection pages.</p>
+  </div>
+
+  <div class="card">
+    <h2>🖨 Print Centre</h2>
+    <p>Print your generated resources instantly.</p>
+    <button onclick="window.print()">Print</button>
+  </div>
+</section>
+
+<section class="output">
+  <h2>Create an Explorer Book</h2>
+
+  <label>Child's name</label>
+  <input id="childName" placeholder="e.g. Arthur">
+
+  <label>Therapy focus</label>
+  <select id="focus">
+    <option>Big feelings</option>
+    <option>Anxiety</option>
+    <option>Transitions</option>
+    <option>Friendship</option>
+    <option>Sensory regulation</option>
+    <option>Confidence</option>
+  </select>
+
+  <label>Favourite animal</label>
+  <input id="animal" placeholder="e.g. frog, koala, butterfly">
+
+  <button onclick="generateBook()">Generate Book Page</button>
+
+  <div id="bookOutput"></div>
+</section>
+
+<script>
+function generateBook() {
+  const name = document.getElementById("childName").value || "Your child";
+  const focus = document.getElementById("focus").value;
+  const animal = document.getElementById("animal").value || "butterfly";
+
+  document.getElementById("bookOutput").innerHTML = `
+    <hr>
+    <h1>${name}'s Explorer Journal</h1>
+    <h2>A gentle adventure about ${focus.toLowerCase()}</h2>
+    <p>Today, ${name} begins a journey through Bloom Valley with a wise little ${animal} guide.</p>
+    <h3>Today's Mission</h3>
+    <p>Notice one feeling in your body, give it a name, and draw where it lives.</p>
+    <h3>Reflection</h3>
+    <p>When ${name} feels overwhelmed, they can pause, breathe, look around, and remember: feelings are visitors, not forever.</p>
+  `;
+}
+</script>
+
+</body>
+</html>
