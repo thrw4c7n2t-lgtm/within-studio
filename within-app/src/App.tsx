@@ -26,6 +26,17 @@ type FocusContent = {
   tinyStep: string;
 };
 
+type WorkbookPage = {
+  kind: string;
+  badge: string;
+  title: string;
+  subtitle: string;
+  body: string;
+  activityTitle: string;
+  prompt: string;
+  activityItems: string[];
+};
+
 const modules: { icon: string; title: Section; description: string }[] = [
   { icon: "🏡", title: "Dashboard", description: "Start here and choose what you want to create." },
   { icon: "📚", title: "Book Creator", description: "Create personalised Explorer workbooks." },
@@ -123,50 +134,77 @@ function App() {
   const childGoal = goal.trim() || "taking one tiny helpful step";
   const content = focusLibrary[focus];
 
-  const pages = useMemo(
+  const pages: WorkbookPage[] = useMemo(
     () => [
       {
+        kind: "coverPage",
+        badge: "Explorer cover",
         title: `${name}'s Explorer Journal`,
         subtitle: `A gentle adventure about ${focus.toLowerCase()}`,
         body: `Today, ${name} steps into ${storySetting} and meets a wise little ${guide}. The ${guide} explains: ${content.metaphor}`,
-        prompt: `Explorer strength: ${childStrength}.`,
+        activityTitle: "Explorer strength",
+        prompt: childStrength,
+        activityItems: ["My guide", "My place", "My brave tool"],
       },
       {
+        kind: "checkPage",
+        badge: "Body check-in",
         title: "Explorer Check-In",
         subtitle: "Before we begin",
-        body: `Sometimes ${focus.toLowerCase()} can show up as ${content.bodyClue}.`,
+        body: `Sometimes ${focus.toLowerCase()} can show up as ${content.bodyClue}. Every body speaks in its own way. We can listen with curiosity instead of blame.`,
+        activityTitle: "Body map prompt",
         prompt: "Draw where you notice this feeling or signal in your body.",
+        activityItems: ["Head", "Chest", "Tummy", "Hands", "Legs", "Whole body"],
       },
       {
+        kind: "missionPage",
+        badge: "Today's mission",
         title: "Today's Mission",
         subtitle: "Notice, name, support",
         body: content.mission,
-        prompt: `Tiny goal for this workbook: ${childGoal}.`,
+        activityTitle: "Tiny goal",
+        prompt: childGoal,
+        activityItems: ["I can notice", "I can name", "I can ask for help"],
       },
       {
+        kind: "toolPage",
+        badge: "Try this tool",
         title: "Try This Tool",
         subtitle: "One small helpful step",
         body: content.tinyStep,
+        activityTitle: "Creative activity",
         prompt: content.activity,
+        activityItems: ["First try", "What changed?", "What could help next?"],
       },
       {
+        kind: "grownupPage",
+        badge: "Grown-up page",
         title: "Grown-Up Support Page",
         subtitle: "Co-regulation script",
         body: `Try saying: “${content.parentLine}”`,
+        activityTitle: "Adult reminder",
         prompt: "Notice what helped before giving a new instruction.",
+        activityItems: ["Lower voice", "Slow body", "Fewer words", "One next step"],
       },
       {
+        kind: "reflectionPage",
+        badge: "Reflection",
         title: "Reflection Page",
         subtitle: "What did I learn?",
         body: "Feelings and body signals can be noticed, named and supported. I do not have to fight them or hide them.",
+        activityTitle: "Finish these sentences",
         prompt: "One thing I practised today was...",
+        activityItems: ["I noticed", "I tried", "I felt proud when", "Next time I can"],
       },
     ],
     [childGoal, childStrength, content, focus, guide, name, storySetting],
   );
 
   const generatedText = pages
-    .map((page, index) => `Page ${index + 1}: ${page.title}\n${page.subtitle}\n${page.body}\n${page.prompt}`)
+    .map(
+      (page, index) =>
+        `Page ${index + 1}: ${page.title}\n${page.subtitle}\n${page.body}\n${page.activityTitle}: ${page.prompt}\n${page.activityItems.join(" | ")}`,
+    )
     .join("\n\n");
 
   const openFocusInCreator = (selectedFocus: Focus) => {
@@ -270,13 +308,26 @@ function App() {
                   </div>
                 ) : (
                   pages.map((page, index) => (
-                    <article className="printPage" key={page.title}>
-                      <p className="pageNumber">Page {index + 1}</p>
-                      <h2>{page.title}</h2>
+                    <article className={`printPage ${page.kind}`} key={page.title}>
+                      <div className="pageDecor decorOne" aria-hidden="true" />
+                      <div className="pageDecor decorTwo" aria-hidden="true" />
+                      <header className="printHeader">
+                        <p className="pageNumber">Page {index + 1}</p>
+                        <span className="pageBadge">{page.badge}</span>
+                      </header>
+                      <h2><span>{page.title}</span></h2>
                       <h3>{page.subtitle}</h3>
-                      <p>{page.body}</p>
-                      <div className="promptBox">{page.prompt}</div>
-                      <div className="drawBox">Draw or write here</div>
+                      <p className="pageBody">{page.body}</p>
+                      <div className="promptBox">
+                        <strong>{page.activityTitle}</strong>
+                        <p>{page.prompt}</p>
+                      </div>
+                      <div className="activityGrid">
+                        {page.activityItems.map((item) => (
+                          <div className="activityTile" key={item}>{item}</div>
+                        ))}
+                      </div>
+                      <div className="drawBox">Draw, write, colour or map it here</div>
                     </article>
                   ))
                 )}
