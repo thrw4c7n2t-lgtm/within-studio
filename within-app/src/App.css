@@ -4,10 +4,33 @@
   box-sizing: border-box;
 }
 
-body {
-  background: #f7f4ee;
+:root {
   color: #263b32;
-  font-family: Inter, system-ui, sans-serif;
+  background: #f7f4ee;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background:
+    radial-gradient(circle at 85% 8%, rgba(205, 216, 194, 0.55), transparent 30rem),
+    radial-gradient(circle at 25% 90%, rgba(216, 199, 173, 0.45), transparent 26rem),
+    #f7f4ee;
+  color: #263b32;
+  min-width: 320px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
 }
 
 .app {
@@ -16,83 +39,138 @@ body {
 }
 
 .sidebar {
-  width: 260px;
-  background: #263b32;
+  width: 282px;
+  background: linear-gradient(180deg, #20382e 0%, #183126 100%);
   color: #fffaf2;
-  padding: 28px;
+  padding: 34px 26px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .sidebar h2 {
-  font-family: Georgia, serif;
-  font-size: 34px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 42px;
+  letter-spacing: -0.06em;
+  margin-bottom: 6px;
+}
+
+.sidebarSub {
+  color: rgba(255, 250, 242, 0.64);
   margin-bottom: 30px;
 }
 
 .navButton {
   width: 100%;
-  border: 0;
+  border: 1px solid transparent;
   background: transparent;
   color: #fffaf2;
   text-align: left;
-  padding: 14px 12px;
-  border-radius: 16px;
+  padding: 15px 14px;
+  border-radius: 18px;
   font-size: 15px;
   cursor: pointer;
-  margin-bottom: 8px;
+  margin-bottom: 9px;
+  transition: 180ms ease;
 }
 
-.navButton:hover {
-  background: rgba(255, 255, 255, 0.12);
+.navButton:hover,
+.navButton.active {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .navButton span {
-  margin-right: 10px;
+  margin-right: 11px;
 }
 
 .main {
   flex: 1;
-  padding: 48px;
+  padding: 40px clamp(22px, 4vw, 64px) 72px;
+  min-width: 0;
 }
 
 .welcome {
-  background: linear-gradient(135deg, #d8c7ad, #e8dfd0, #cbd8c2);
-  border-radius: 34px;
-  padding: 52px;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(255, 255, 255, 0.44), transparent 18rem),
+    linear-gradient(135deg, #d8c7ad, #e8dfd0 48%, #cbd8c2);
+  border: 1px solid rgba(38, 59, 50, 0.06);
+  border-radius: 42px;
+  padding: clamp(36px, 6vw, 66px);
   margin-bottom: 34px;
+  box-shadow: 0 24px 80px rgba(61, 48, 35, 0.08);
+}
+
+.dashboardHero {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.compactHero {
+  text-align: center;
 }
 
 .eyebrow {
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.16em;
   font-size: 12px;
-  margin-bottom: 18px;
+  font-weight: 800;
+  margin-bottom: 16px;
   color: #51645a;
 }
 
 .welcome h1 {
-  font-family: Georgia, serif;
-  font-size: 48px;
-  max-width: 720px;
-  margin-bottom: 18px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(42px, 6vw, 72px);
+  line-height: 0.95;
+  letter-spacing: -0.07em;
+  max-width: 800px;
+  margin: 0 auto 18px;
+  color: #fffaf2;
+  text-shadow: 0 1px 18px rgba(43, 52, 41, 0.12);
 }
 
-.welcome p {
-  max-width: 680px;
+.dashboardHero h1 {
+  margin-left: 0;
+}
+
+.welcome p:not(.eyebrow) {
+  max-width: 760px;
   line-height: 1.7;
-  color: #51645a;
+  color: #43574e;
+  font-size: 18px;
 }
 
-.moduleGrid {
+.compactHero p:not(.eyebrow) {
+  margin: 0 auto;
+}
+
+.moduleGrid,
+.resourceGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
+  gap: 22px;
 }
 
-.moduleCard {
-  background: white;
-  border-radius: 28px;
+.moduleCard,
+.resourceCard,
+.formPanel,
+.bookPreview,
+.guidePanel,
+.libraryTable,
+.settingsPanel {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(38, 59, 50, 0.08);
+  border-radius: 32px;
+  box-shadow: 0 20px 60px rgba(61, 48, 35, 0.08);
+}
+
+.moduleCard,
+.resourceCard {
   padding: 28px;
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
 }
 
 .icon {
@@ -100,33 +178,150 @@ body {
   margin-bottom: 18px;
 }
 
-.moduleCard h3 {
-  font-family: Georgia, serif;
-  font-size: 24px;
+.moduleCard h3,
+.resourceCard h3,
+.libraryRow h3,
+.formPanel h2,
+.parentGuideCard h2,
+.settingPreview h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: -0.045em;
+  color: #263b32;
+}
+
+.moduleCard h3,
+.resourceCard h3,
+.libraryRow h3 {
+  font-size: 25px;
   margin-bottom: 12px;
 }
 
-.moduleCard p {
+.moduleCard p,
+.resourceCard p,
+.libraryRow p,
+.parentGuideCard p,
+.settingPreview p {
   color: #65746c;
-  line-height: 1.6;
-  margin-bottom: 22px;
+  line-height: 1.65;
+  margin-bottom: 20px;
 }
 
-.moduleCard button {
+.moduleCard button,
+.resourceCard button,
+.libraryRow button,
+.formPanel button,
+.parentGuideCard button {
   border: 0;
   background: #55705f;
   color: white;
   padding: 12px 18px;
   border-radius: 999px;
   cursor: pointer;
+  font-weight: 800;
+  transition: 180ms ease;
 }
-.navButton.active {
-  background: rgba(255, 255, 255, 0.18);
+
+.moduleCard button:hover,
+.resourceCard button:hover,
+.libraryRow button:hover,
+.formPanel button:hover,
+.parentGuideCard button:hover {
+  background: #3e5b4b;
+  transform: translateY(-1px);
 }
-.printPage {
+
+.secondaryButton {
+  background: #efe7da !important;
+  color: #263b32 !important;
+}
+
+.creator {
+  display: grid;
+  grid-template-columns: minmax(290px, 410px) minmax(0, 1fr);
+  gap: 26px;
+  align-items: start;
+}
+
+.formPanel {
+  padding: 28px;
+  position: sticky;
+  top: 28px;
+}
+
+.formPanel h2 {
+  font-size: 31px;
+  margin-bottom: 24px;
+}
+
+.formPanel label,
+.guideControls label,
+.settingsPanel label {
+  display: block;
+  font-weight: 850;
+  letter-spacing: 0.02em;
+  margin: 18px 0 8px;
+  color: #263b32;
+}
+
+.formPanel input,
+.formPanel select,
+.formPanel textarea,
+.guideControls select,
+.settingsPanel select {
+  width: 100%;
+  border: 1px solid rgba(38, 59, 50, 0.14);
+  border-radius: 17px;
+  padding: 14px 15px;
+  color: #263b32;
   background: #fffaf2;
+  outline: none;
+}
+
+.formPanel textarea {
+  min-height: 92px;
+  resize: vertical;
+}
+
+.formPanel input:focus,
+.formPanel select:focus,
+.formPanel textarea:focus,
+.guideControls select:focus,
+.settingsPanel select:focus {
+  border-color: #55705f;
+  box-shadow: 0 0 0 4px rgba(85, 112, 95, 0.12);
+}
+
+.formPanel button {
+  width: 100%;
+  margin-top: 14px;
+}
+
+.bookPreview {
+  padding: 24px;
+}
+
+.emptyPreview {
+  min-height: 420px;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  color: #65746c;
+}
+
+.emptyPreview h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 38px;
+  letter-spacing: -0.05em;
+  color: #263b32;
+  margin-bottom: 10px;
+}
+
+.printPage {
+  background:
+    radial-gradient(circle at 92% 10%, rgba(203, 216, 194, 0.36), transparent 16rem),
+    #fffaf2;
   border: 1px solid #eadfcd;
-  border-radius: 24px;
+  border-radius: 26px;
   padding: 34px;
   margin-bottom: 24px;
   min-height: 520px;
@@ -135,8 +330,39 @@ body {
 .pageNumber {
   font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.13em;
   color: #8b7d68;
+  margin-bottom: 20px;
+}
+
+.printPage h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(34px, 4vw, 50px);
+  letter-spacing: -0.06em;
+  line-height: 1;
+  color: #263b32;
+  margin-bottom: 10px;
+}
+
+.printPage h3 {
+  color: #6c5b43;
+  font-size: 18px;
+  margin-bottom: 22px;
+}
+
+.printPage p {
+  color: #485a50;
+  font-size: 18px;
+  line-height: 1.75;
+}
+
+.promptBox {
+  background: #f3eadc;
+  border-radius: 20px;
+  color: #46584f;
+  line-height: 1.55;
+  margin-top: 24px;
+  padding: 18px;
 }
 
 .drawBox {
@@ -150,14 +376,154 @@ body {
   color: #9a8b75;
 }
 
-@media print {
-  .printPage {
-    page-break-after: always;
-    border: none;
-    min-height: 100vh;
+.guidePanel,
+.settingsPanel {
+  padding: 28px;
+}
+
+.guideControls {
+  max-width: 380px;
+  margin-bottom: 22px;
+}
+
+.parentGuideCard,
+.settingPreview {
+  background: #fffaf2;
+  border: 1px solid #eadfcd;
+  border-radius: 28px;
+  padding: 28px;
+}
+
+.parentGuideCard h2,
+.settingPreview h2 {
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.05;
+  margin-bottom: 22px;
+}
+
+.resourceGrid .resourceCard {
+  min-height: 310px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.libraryTable {
+  padding: 16px;
+}
+
+.libraryRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  background: #fffaf2;
+  border: 1px solid #eadfcd;
+  border-radius: 24px;
+  padding: 22px;
+  margin-bottom: 14px;
+}
+
+.libraryRow:last-child {
+  margin-bottom: 0;
+}
+
+.settingsPanel {
+  max-width: 760px;
+}
+
+.settingsPanel select {
+  max-width: 380px;
+  margin-bottom: 22px;
+}
+
+@media (max-width: 980px) {
+  .app {
+    display: block;
   }
 
-  .bookPreview {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .sidebar h2,
+  .sidebarSub {
+    grid-column: 1 / -1;
+  }
+
+  .creator {
+    grid-template-columns: 1fr;
+  }
+
+  .formPanel {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .main {
+    padding: 22px 16px 48px;
+  }
+
+  .sidebar {
+    grid-template-columns: 1fr;
+    padding: 24px 18px;
+  }
+
+  .welcome {
+    border-radius: 30px;
+  }
+
+  .libraryRow {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .libraryRow button {
+    width: 100%;
+  }
+}
+
+@media print {
+  body {
     background: white;
+  }
+
+  .sidebar,
+  .welcome,
+  .formPanel,
+  .moduleGrid,
+  .resourceGrid,
+  .guideControls,
+  .libraryTable,
+  .settingsPanel {
+    display: none !important;
+  }
+
+  .app,
+  .main,
+  .creator,
+  .bookPreview {
+    display: block;
+    padding: 0;
+    margin: 0;
+    background: white;
+    box-shadow: none;
+    border: none;
+  }
+
+  .printPage {
+    page-break-after: always;
+    break-after: page;
+    border: none;
+    border-radius: 0;
+    min-height: 100vh;
+    margin: 0;
+    padding: 28mm 22mm;
   }
 }
