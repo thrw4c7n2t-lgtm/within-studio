@@ -602,7 +602,9 @@ button {
     margin: 0;
   }
 
+  html,
   body {
+    width: 210mm;
     background: white;
   }
 
@@ -622,6 +624,7 @@ button {
   .creator,
   .bookPreview {
     display: block;
+    width: 210mm;
     padding: 0;
     margin: 0;
     background: white;
@@ -630,26 +633,94 @@ button {
   }
 
   .printPage {
-    page-break-after: always;
     break-after: page;
+    page-break-after: always;
+    break-inside: avoid;
+    page-break-inside: avoid;
     border: none;
     border-radius: 0;
-    min-height: 297mm;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    height: 297mm;
+    min-height: 0;
     margin: 0;
-    padding: 24mm 20mm;
+    overflow: hidden;
+    padding: 16mm 17mm;
+    width: 210mm;
+  }
+
+  .printHeader {
+    margin-bottom: 10mm;
+  }
+
+  .pageNumber,
+  .pageBadge {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
+
+  .pageBadge {
+    padding: 6px 10px;
   }
 
   .printPage h2 {
-    font-size: 46px;
-    letter-spacing: -0.02em;
-    word-spacing: 0.12em;
+    font-size: 39px;
+    letter-spacing: -0.015em;
+    line-height: 1.02;
+    margin-bottom: 4mm;
+    word-spacing: 0.1em;
+  }
+
+  .printPage h3 {
+    font-size: 16px;
+    margin-bottom: 5mm;
+  }
+
+  .pageBody {
+    font-size: 15px;
+    line-height: 1.52;
+  }
+
+  .promptBox {
+    font-size: 14px;
+    line-height: 1.42;
+    margin-top: 6mm;
+    padding: 4mm;
+  }
+
+  .promptBox strong {
+    font-size: 11px;
+    margin-bottom: 2mm;
   }
 
   .activityGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3mm;
+    margin-top: 4mm;
+  }
+
+  .activityTile {
+    border-radius: 12px;
+    font-size: 13px;
+    min-height: 11mm;
+    padding: 2mm;
   }
 
   .drawBox {
-    min-height: 70mm;
+    flex: 1;
+    font-size: 13px;
+    margin-top: 5mm;
+    min-height: 0;
+  }
+
+  .decorOne {
+    height: 120px;
+    width: 120px;
+  }
+
+  .decorTwo {
+    height: 110px;
+    width: 110px;
   }
 }
