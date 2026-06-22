@@ -26,6 +26,24 @@ type FocusContent = {
   tinyStep: string;
 };
 
+type AnimalGuide = {
+  id: string;
+  emoji: string;
+  name: string;
+  label: string;
+  trait: string;
+  helperLine: string;
+};
+
+type WorldTheme = {
+  id: string;
+  emoji: string;
+  name: string;
+  setting: string;
+  palette: string;
+  sensoryWords: string;
+};
+
 type WorkbookPage = {
   kind: string;
   badge: string;
@@ -35,6 +53,7 @@ type WorkbookPage = {
   activityTitle: string;
   prompt: string;
   activityItems: string[];
+  scene: string[];
 };
 
 const modules: { icon: string; title: Section; description: string }[] = [
@@ -53,6 +72,108 @@ const focusOptions: Focus[] = [
   "Friendship",
   "Sensory regulation",
   "Confidence",
+];
+
+const animalGuides: AnimalGuide[] = [
+  {
+    id: "frog",
+    emoji: "🐸",
+    name: "Fenn the Frog",
+    label: "calm body helper",
+    trait: "notices tiny changes",
+    helperLine: "Fenn reminds me to pause, breathe and listen to my body.",
+  },
+  {
+    id: "koala",
+    emoji: "🐨",
+    name: "Koko the Koala",
+    label: "slow-down buddy",
+    trait: "takes gentle breaks",
+    helperLine: "Koko reminds me that slow is still progress.",
+  },
+  {
+    id: "owl",
+    emoji: "🦉",
+    name: "Olive the Owl",
+    label: "clue detective",
+    trait: "spots patterns",
+    helperLine: "Olive reminds me to look for clues before I choose what to do.",
+  },
+  {
+    id: "fox",
+    emoji: "🦊",
+    name: "Fern the Fox",
+    label: "brave steps guide",
+    trait: "tries tiny brave steps",
+    helperLine: "Fern reminds me that brave can be very small.",
+  },
+  {
+    id: "turtle",
+    emoji: "🐢",
+    name: "Tully the Turtle",
+    label: "safe shell friend",
+    trait: "knows when to rest",
+    helperLine: "Tully reminds me I can use my safe shell and come back when I am ready.",
+  },
+  {
+    id: "butterfly",
+    emoji: "🦋",
+    name: "Bibi the Butterfly",
+    label: "change helper",
+    trait: "moves through change",
+    helperLine: "Bibi reminds me that change can happen one flutter at a time.",
+  },
+];
+
+const worldThemes: WorldTheme[] = [
+  {
+    id: "rainforest",
+    emoji: "🌿",
+    name: "Rainforest Creek",
+    setting: "a mossy rainforest creek with stepping stones, ferns and tiny hiding places",
+    palette: "Moss green, creek blue and warm clay",
+    sensoryWords: "cool water, soft moss, bird calls and dappled light",
+  },
+  {
+    id: "rockpool",
+    emoji: "🐚",
+    name: "Ocean Rockpool",
+    setting: "a sparkling ocean rockpool with shells, sea glass and gentle waves",
+    palette: "Seafoam, sand, coral and sky blue",
+    sensoryWords: "salty air, smooth shells, wave sounds and bright sun",
+  },
+  {
+    id: "burrow",
+    emoji: "🕯️",
+    name: "Cosy Burrow",
+    setting: "a cosy underground burrow with lanterns, cushions and winding tunnels",
+    palette: "Warm cocoa, cream, honey and soft green",
+    sensoryWords: "warm blankets, low light, quiet corners and soft pressure",
+  },
+  {
+    id: "garden",
+    emoji: "🌼",
+    name: "Secret Garden",
+    setting: "a secret garden with giant flowers, butterflies and a winding path",
+    palette: "Petal pink, sage, butter yellow and cream",
+    sensoryWords: "flower smells, buzzing bees, soft grass and hidden doors",
+  },
+  {
+    id: "stars",
+    emoji: "⭐",
+    name: "Starry Camp",
+    setting: "a starry camp with a glowing tent, moon path and quiet night sky",
+    palette: "Indigo, lavender, moon cream and pine green",
+    sensoryWords: "cool night air, campfire warmth, soft stars and quiet sounds",
+  },
+  {
+    id: "mountain",
+    emoji: "⛰️",
+    name: "Mountain Trail",
+    setting: "a mountain trail with lookout rocks, wildflowers and a brave little path",
+    palette: "Stone grey, eucalyptus, sky blue and sunset peach",
+    sensoryWords: "fresh air, crunching gravel, big views and strong legs",
+  },
 ];
 
 const focusLibrary: Record<Focus, FocusContent> = {
@@ -119,8 +240,8 @@ function App() {
   const [active, setActive] = useState<Section>("Dashboard");
   const [childName, setChildName] = useState("Arthur");
   const [focus, setFocus] = useState<Focus>("Big feelings");
-  const [animal, setAnimal] = useState("frog");
-  const [setting, setSetting] = useState("a mossy rainforest creek");
+  const [animalGuideId, setAnimalGuideId] = useState("frog");
+  const [worldThemeId, setWorldThemeId] = useState("rainforest");
   const [strength, setStrength] = useState("noticing small details");
   const [goal, setGoal] = useState("pausing before the feeling gets too big");
   const [generated, setGenerated] = useState(false);
@@ -128,36 +249,40 @@ function App() {
   const [tone, setTone] = useState("gentle and playful");
 
   const name = childName.trim() || "Your child";
-  const guide = animal.trim() || "butterfly";
-  const storySetting = setting.trim() || "a quiet garden path";
+  const animalGuide = animalGuides.find((animal) => animal.id === animalGuideId) ?? animalGuides[0];
+  const worldTheme = worldThemes.find((theme) => theme.id === worldThemeId) ?? worldThemes[0];
   const childStrength = strength.trim() || "trying again";
   const childGoal = goal.trim() || "taking one tiny helpful step";
   const content = focusLibrary[focus];
 
+  const sceneItems = [worldTheme.emoji, animalGuide.emoji, "✨", "🌱"];
+
   const pages: WorkbookPage[] = useMemo(
     () => [
       {
-        kind: "coverPage",
+        kind: `coverPage theme-${worldTheme.id}`,
         badge: "Explorer cover",
         title: `${name}'s Explorer Journal`,
-        subtitle: `A gentle adventure about ${focus.toLowerCase()}`,
-        body: `Today, ${name} steps into ${storySetting} and meets a wise little ${guide}. The ${guide} explains: ${content.metaphor}`,
+        subtitle: `A ${worldTheme.name.toLowerCase()} adventure about ${focus.toLowerCase()}`,
+        body: `Today, ${name} steps into ${worldTheme.setting} and meets ${animalGuide.name}, a ${animalGuide.label}. ${animalGuide.name.split(" ")[0]} explains: ${content.metaphor}`,
         activityTitle: "Explorer strength",
-        prompt: childStrength,
-        activityItems: ["My guide", "My place", "My brave tool"],
+        prompt: `${childStrength}. Guide gift: ${animalGuide.helperLine}`,
+        activityItems: [animalGuide.name, worldTheme.name, animalGuide.trait],
+        scene: sceneItems,
       },
       {
-        kind: "checkPage",
+        kind: `checkPage theme-${worldTheme.id}`,
         badge: "Body check-in",
         title: "Explorer Check-In",
         subtitle: "Before we begin",
-        body: `Sometimes ${focus.toLowerCase()} can show up as ${content.bodyClue}. Every body speaks in its own way. We can listen with curiosity instead of blame.`,
+        body: `Sometimes ${focus.toLowerCase()} can show up as ${content.bodyClue}. Every body speaks in its own way. In ${worldTheme.name}, the clues might feel like ${worldTheme.sensoryWords}.`,
         activityTitle: "Body map prompt",
         prompt: "Draw where you notice this feeling or signal in your body.",
         activityItems: ["Head", "Chest", "Tummy", "Hands", "Legs", "Whole body"],
+        scene: [animalGuide.emoji, "🔎", "💛", worldTheme.emoji],
       },
       {
-        kind: "missionPage",
+        kind: `missionPage theme-${worldTheme.id}`,
         badge: "Today's mission",
         title: "Today's Mission",
         subtitle: "Notice, name, support",
@@ -165,39 +290,43 @@ function App() {
         activityTitle: "Tiny goal",
         prompt: childGoal,
         activityItems: ["I can notice", "I can name", "I can ask for help"],
+        scene: ["🗺️", animalGuide.emoji, "⭐", worldTheme.emoji],
       },
       {
-        kind: "toolPage",
+        kind: `toolPage theme-${worldTheme.id}`,
         badge: "Try this tool",
         title: "Try This Tool",
         subtitle: "One small helpful step",
-        body: content.tinyStep,
+        body: `${content.tinyStep} ${animalGuide.name} can practise this with you.` ,
         activityTitle: "Creative activity",
         prompt: content.activity,
         activityItems: ["First try", "What changed?", "What could help next?"],
+        scene: [animalGuide.emoji, "🎨", "🌈", worldTheme.emoji],
       },
       {
-        kind: "grownupPage",
+        kind: `grownupPage theme-${worldTheme.id}`,
         badge: "Grown-up page",
         title: "Grown-Up Support Page",
         subtitle: "Co-regulation script",
         body: `Try saying: “${content.parentLine}”`,
         activityTitle: "Adult reminder",
-        prompt: "Notice what helped before giving a new instruction.",
+        prompt: `Use ${animalGuide.name} as a playful cue when words feel too hard. Notice what helped before giving a new instruction.`,
         activityItems: ["Lower voice", "Slow body", "Fewer words", "One next step"],
+        scene: ["🤝", animalGuide.emoji, "💬", "🌿"],
       },
       {
-        kind: "reflectionPage",
+        kind: `reflectionPage theme-${worldTheme.id}`,
         badge: "Reflection",
         title: "Reflection Page",
         subtitle: "What did I learn?",
-        body: "Feelings and body signals can be noticed, named and supported. I do not have to fight them or hide them.",
+        body: `Feelings and body signals can be noticed, named and supported. ${name} and ${animalGuide.name} can return to ${worldTheme.name} whenever they need to practise again.`,
         activityTitle: "Finish these sentences",
         prompt: "One thing I practised today was...",
         activityItems: ["I noticed", "I tried", "I felt proud when", "Next time I can"],
+        scene: ["🌟", animalGuide.emoji, "📖", worldTheme.emoji],
       },
     ],
-    [childGoal, childStrength, content, focus, guide, name, storySetting],
+    [animalGuide, childGoal, childStrength, content, focus, name, sceneItems, worldTheme],
   );
 
   const generatedText = pages
@@ -266,7 +395,7 @@ function App() {
             <section className="welcome compactHero">
               <p className="eyebrow">Within Studio</p>
               <h1>Book Creator</h1>
-              <p>Create a printable mini Explorer Collection workbook with story pages, child activities and parent scripts.</p>
+              <p>Create a printable mini Explorer Collection workbook with story pages, child activities, animal guides and parent scripts.</p>
             </section>
 
             <section className="creator">
@@ -284,10 +413,36 @@ function App() {
                 </select>
 
                 <label>Animal guide</label>
-                <input value={animal} onChange={(event) => setAnimal(event.target.value)} placeholder="e.g. frog, koala, owl" />
+                <div className="choiceGrid animalChoiceGrid">
+                  {animalGuides.map((animal) => (
+                    <button
+                      type="button"
+                      key={animal.id}
+                      className={animalGuideId === animal.id ? "choiceCard selected" : "choiceCard"}
+                      onClick={() => setAnimalGuideId(animal.id)}
+                    >
+                      <span className="choiceEmoji">{animal.emoji}</span>
+                      <strong>{animal.name}</strong>
+                      <small>{animal.label}</small>
+                    </button>
+                  ))}
+                </div>
 
-                <label>Story setting</label>
-                <input value={setting} onChange={(event) => setSetting(event.target.value)} placeholder="e.g. rainforest creek" />
+                <label>Story world</label>
+                <div className="choiceGrid themeChoiceGrid">
+                  {worldThemes.map((theme) => (
+                    <button
+                      type="button"
+                      key={theme.id}
+                      className={worldThemeId === theme.id ? "choiceCard selected" : "choiceCard"}
+                      onClick={() => setWorldThemeId(theme.id)}
+                    >
+                      <span className="choiceEmoji">{theme.emoji}</span>
+                      <strong>{theme.name}</strong>
+                      <small>{theme.palette}</small>
+                    </button>
+                  ))}
+                </div>
 
                 <label>Child strength</label>
                 <input value={strength} onChange={(event) => setStrength(event.target.value)} placeholder="e.g. curious, funny, brave" />
@@ -304,7 +459,7 @@ function App() {
                 {!generated ? (
                   <div className="emptyPreview">
                     <h2>Ready when you are.</h2>
-                    <p>Fill in the form and click Generate Workbook.</p>
+                    <p>Choose an animal guide, pick a story world and click Generate Workbook.</p>
                   </div>
                 ) : (
                   pages.map((page, index) => (
@@ -315,6 +470,11 @@ function App() {
                         <p className="pageNumber">Page {index + 1}</p>
                         <span className="pageBadge">{page.badge}</span>
                       </header>
+                      <div className="storyScene" aria-hidden="true">
+                        {page.scene.map((item, sceneIndex) => (
+                          <span key={`${page.title}-${item}-${sceneIndex}`}>{item}</span>
+                        ))}
+                      </div>
                       <h2><span>{page.title}</span></h2>
                       <h3>{page.subtitle}</h3>
                       <p className="pageBody">{page.body}</p>
