@@ -1,59 +1,203 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "./App.css";
 
+type Section =
+  | "Dashboard"
+  | "Book Creator"
+  | "Explorer Collection"
+  | "Parent Guides"
+  | "Resource Library"
+  | "Settings";
+
+type Focus =
+  | "Big feelings"
+  | "Anxiety"
+  | "Transitions"
+  | "Friendship"
+  | "Sensory regulation"
+  | "Confidence";
+
+type FocusContent = {
+  metaphor: string;
+  bodyClue: string;
+  mission: string;
+  parentLine: string;
+  activity: string;
+  tinyStep: string;
+};
+
+const modules: { icon: string; title: Section; description: string }[] = [
+  { icon: "🏡", title: "Dashboard", description: "Start here and choose what you want to create." },
+  { icon: "📚", title: "Book Creator", description: "Create personalised Explorer workbooks." },
+  { icon: "🌿", title: "Explorer Collection", description: "Browse themed child-friendly therapy packs." },
+  { icon: "👨‍👩‍👧", title: "Parent Guides", description: "Generate warm scripts and home support plans." },
+  { icon: "🎨", title: "Resource Library", description: "Find printable worksheets and activity ideas." },
+  { icon: "⚙️", title: "Settings", description: "Adjust the tone and print preferences." },
+];
+
+const focusOptions: Focus[] = [
+  "Big feelings",
+  "Anxiety",
+  "Transitions",
+  "Friendship",
+  "Sensory regulation",
+  "Confidence",
+];
+
+const focusLibrary: Record<Focus, FocusContent> = {
+  "Big feelings": {
+    metaphor: "Feelings are like weather. Some are gentle and some are stormy, but all of them can move through.",
+    bodyClue: "hot cheeks, tight hands, a buzzing chest, a loud voice or a heavy tummy",
+    mission: "Notice the feeling, name it, find it in the body and choose one safe way to let it move.",
+    parentLine: "I can see this feeling is really big. I am not scared of it, and I will help you ride the wave.",
+    activity: "Draw your feeling as weather. Add one thing that helps the weather soften.",
+    tinyStep: "Put one hand on your body and say: this is a feeling, not forever.",
+  },
+  Anxiety: {
+    metaphor: "Anxiety is a watchful guard trying to keep the body safe, even when the danger is not as big as it feels.",
+    bodyClue: "a fast heart, butterflies, questions on repeat, tummy pain or needing to stay close",
+    mission: "Thank the worry guard, check the facts and take one tiny brave step.",
+    parentLine: "Your worry is trying to protect you. We can listen to it without letting it be the boss.",
+    activity: "Make a brave ladder with three tiny steps: easy, medium and stretchy.",
+    tinyStep: "Ask: what is my worry saying, and what do I know is true?",
+  },
+  Transitions: {
+    metaphor: "Transitions are bridges. Some bridges feel wobbly until we know what is waiting on the other side.",
+    bodyClue: "stalling, arguing, hiding, becoming silly, asking for more time or feeling suddenly tired",
+    mission: "Name what is changing, what is staying the same, and what happens first, next and last.",
+    parentLine: "This is a change moment. I will show you the next three steps and stay calm while your body catches up.",
+    activity: "Draw a bridge from now to next. Add three stepping stones: first, next and last.",
+    tinyStep: "Choose one transition helper: timer, visual, job, song or movement break.",
+  },
+  Friendship: {
+    metaphor: "Friendship is like a campfire circle. Everyone needs space, warmth, turns and kindness.",
+    bodyClue: "talking over others, taking control, feeling left out, getting too close or not knowing how to join",
+    mission: "Notice the other person, listen for one clue and try one flexible play idea.",
+    parentLine: "Friendship is a skill we practise. Let us slow the moment down and look for one clue from the other person.",
+    activity: "Write three join-in lines: Can I play? What are you building? Could I have a turn after you?",
+    tinyStep: "Look for one clue: face, body, words or distance.",
+  },
+  "Sensory regulation": {
+    metaphor: "The body has a sensory compass that points toward what it needs: movement, pressure, quiet, chewing or space.",
+    bodyClue: "wiggling, crashing, chewing, covering ears, hiding, humming or needing firm pressure",
+    mission: "Notice the body signal, choose a sensory tool and check whether the signal changes.",
+    parentLine: "Your body is asking for help. Let us choose a tool before we ask it to do something hard.",
+    activity: "Make a sensory menu with movement tools, quiet tools and pressure tools.",
+    tinyStep: "Choose one body tool for two minutes, then check in again.",
+  },
+  Confidence: {
+    metaphor: "Confidence grows like a seed. It needs tiny tries, safe support and time before it blooms.",
+    bodyClue: "saying I cannot, hiding work, giving up quickly, avoiding hard things or needing reassurance",
+    mission: "Remember one past success, choose one small try and celebrate effort instead of perfect results.",
+    parentLine: "You do not have to feel ready to begin. We can start tiny, and I will notice your effort.",
+    activity: "Draw a brave seed. Write one thing it has already survived and one tiny thing it will try next.",
+    tinyStep: "Do the first tiny part for two minutes only.",
+  },
+};
+
+const resourceLibrary = [
+  { title: "Emotion Body Map", focus: "Big feelings" as Focus, type: "Worksheet", age: "5-10" },
+  { title: "Worry Guard Fact Check", focus: "Anxiety" as Focus, type: "Activity", age: "6-12" },
+  { title: "First, Next, Last Bridge", focus: "Transitions" as Focus, type: "Visual", age: "4-10" },
+  { title: "Friendship Clue Detective", focus: "Friendship" as Focus, type: "Worksheet", age: "6-12" },
+  { title: "Sensory Menu Builder", focus: "Sensory regulation" as Focus, type: "Planning page", age: "4-12" },
+  { title: "Tiny Brave Step Ladder", focus: "Confidence" as Focus, type: "Worksheet", age: "6-12" },
+];
+
 function App() {
-  const [active, setActive] = useState("Dashboard");
-  const [childName, setChildName] = useState("");
-  const [focus, setFocus] = useState("Big feelings");
-  const [animal, setAnimal] = useState("");
+  const [active, setActive] = useState<Section>("Dashboard");
+  const [childName, setChildName] = useState("Arthur");
+  const [focus, setFocus] = useState<Focus>("Big feelings");
+  const [animal, setAnimal] = useState("frog");
+  const [setting, setSetting] = useState("a mossy rainforest creek");
+  const [strength, setStrength] = useState("noticing small details");
+  const [goal, setGoal] = useState("pausing before the feeling gets too big");
   const [generated, setGenerated] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [tone, setTone] = useState("gentle and playful");
 
-  const modules = [
-    { icon: "🏡", title: "Dashboard" },
-    { icon: "📚", title: "Book Creator" },
-    { icon: "🌿", title: "Explorer Collection" },
-    { icon: "👨‍👩‍👧", title: "Parent Guides" },
-    { icon: "🎨", title: "Resource Library" },
-    { icon: "⚙️", title: "Settings" },
-  ];
+  const name = childName.trim() || "Your child";
+  const guide = animal.trim() || "butterfly";
+  const storySetting = setting.trim() || "a quiet garden path";
+  const childStrength = strength.trim() || "trying again";
+  const childGoal = goal.trim() || "taking one tiny helpful step";
+  const content = focusLibrary[focus];
 
-  const name = childName || "Your child";
-  const guide = animal || "butterfly";
+  const pages = useMemo(
+    () => [
+      {
+        title: `${name}'s Explorer Journal`,
+        subtitle: `A gentle adventure about ${focus.toLowerCase()}`,
+        body: `Today, ${name} steps into ${storySetting} and meets a wise little ${guide}. The ${guide} explains: ${content.metaphor}`,
+        prompt: `Explorer strength: ${childStrength}.`,
+      },
+      {
+        title: "Explorer Check-In",
+        subtitle: "Before we begin",
+        body: `Sometimes ${focus.toLowerCase()} can show up as ${content.bodyClue}.`,
+        prompt: "Draw where you notice this feeling or signal in your body.",
+      },
+      {
+        title: "Today's Mission",
+        subtitle: "Notice, name, support",
+        body: content.mission,
+        prompt: `Tiny goal for this workbook: ${childGoal}.`,
+      },
+      {
+        title: "Try This Tool",
+        subtitle: "One small helpful step",
+        body: content.tinyStep,
+        prompt: content.activity,
+      },
+      {
+        title: "Grown-Up Support Page",
+        subtitle: "Co-regulation script",
+        body: `Try saying: “${content.parentLine}”`,
+        prompt: "Notice what helped before giving a new instruction.",
+      },
+      {
+        title: "Reflection Page",
+        subtitle: "What did I learn?",
+        body: "Feelings and body signals can be noticed, named and supported. I do not have to fight them or hide them.",
+        prompt: "One thing I practised today was...",
+      },
+    ],
+    [childGoal, childStrength, content, focus, guide, name, storySetting],
+  );
 
-  const pages = [
-    {
-      title: `${name}'s Explorer Journal`,
-      subtitle: `A gentle adventure about ${focus.toLowerCase()}`,
-      body: `Today, ${name} begins a journey through Within Valley with a wise little ${guide} guide.`,
-    },
-    {
-      title: "Explorer Check-In",
-      subtitle: "Before we begin",
-      body: "Circle or draw: How does your body feel today? What is your energy like? What feeling is visiting you?",
-    },
-    {
-      title: "Today's Mission",
-      subtitle: "Notice, name, support",
-      body: `When ${name} notices a big feeling, they can pause, breathe, name it, and choose one helpful next step.`,
-    },
-    {
-      title: "Reflection Page",
-      subtitle: "What did I learn?",
-      body: "Feelings are visitors. They can be noticed, named and gently supported. I do not need to fight them or hide them.",
-    },
-  ];
+  const generatedText = pages
+    .map((page, index) => `Page ${index + 1}: ${page.title}\n${page.subtitle}\n${page.body}\n${page.prompt}`)
+    .join("\n\n");
+
+  const openFocusInCreator = (selectedFocus: Focus) => {
+    setFocus(selectedFocus);
+    setGenerated(true);
+    setCopied(false);
+    setActive("Book Creator");
+  };
+
+  const copyWorkbookText = async () => {
+    try {
+      await navigator.clipboard.writeText(generatedText);
+      setCopied(true);
+    } catch {
+      setCopied(false);
+    }
+  };
 
   return (
     <div className="app">
       <aside className="sidebar">
         <h2>Within</h2>
+        <p className="sidebarSub">Studio builder</p>
         {modules.map((module) => (
           <button
             key={module.title}
             className={active === module.title ? "navButton active" : "navButton"}
             onClick={() => setActive(module.title)}
           >
-            <span>{module.icon}</span>{module.title}
+            <span>{module.icon}</span>
+            {module.title}
           </button>
         ))}
       </aside>
@@ -61,19 +205,19 @@ function App() {
       <main className="main">
         {active === "Dashboard" && (
           <>
-            <section className="welcome">
+            <section className="welcome dashboardHero">
               <p className="eyebrow">Within Studio</p>
               <h1>What would you like to create today?</h1>
-              <p>A calm creative workspace for therapeutic books, family resources and printable tools.</p>
+              <p>A calm creative workspace for therapeutic books, family resources and printable neuroaffirming tools.</p>
             </section>
             <section className="moduleGrid">
-              {modules.filter((m) => m.title !== "Dashboard").map((module) => (
-                <div className="moduleCard" key={module.title}>
+              {modules.filter((module) => module.title !== "Dashboard").map((module) => (
+                <article className="moduleCard" key={module.title}>
                   <div className="icon">{module.icon}</div>
                   <h3>{module.title}</h3>
-                  <p>Open this area to begin creating.</p>
+                  <p>{module.description}</p>
                   <button onClick={() => setActive(module.title)}>Open</button>
-                </div>
+                </article>
               ))}
             </section>
           </>
@@ -81,10 +225,10 @@ function App() {
 
         {active === "Book Creator" && (
           <>
-            <section className="welcome">
+            <section className="welcome compactHero">
               <p className="eyebrow">Within Studio</p>
               <h1>Book Creator</h1>
-              <p>Create a printable mini Explorer Collection workbook.</p>
+              <p>Create a printable mini Explorer Collection workbook with story pages, child activities and parent scripts.</p>
             </section>
 
             <section className="creator">
@@ -92,37 +236,48 @@ function App() {
                 <h2>Create Explorer Book</h2>
 
                 <label>Child's name</label>
-                <input value={childName} onChange={(e) => setChildName(e.target.value)} placeholder="e.g. Arthur" />
+                <input value={childName} onChange={(event) => setChildName(event.target.value)} placeholder="e.g. Arthur" />
 
                 <label>Therapy focus</label>
-                <select value={focus} onChange={(e) => setFocus(e.target.value)}>
-                  <option>Big feelings</option>
-                  <option>Anxiety</option>
-                  <option>Transitions</option>
-                  <option>Friendship</option>
-                  <option>Sensory regulation</option>
-                  <option>Confidence</option>
+                <select value={focus} onChange={(event) => setFocus(event.target.value as Focus)}>
+                  {focusOptions.map((option) => (
+                    <option key={option}>{option}</option>
+                  ))}
                 </select>
 
                 <label>Animal guide</label>
-                <input value={animal} onChange={(e) => setAnimal(e.target.value)} placeholder="e.g. frog, koala, owl" />
+                <input value={animal} onChange={(event) => setAnimal(event.target.value)} placeholder="e.g. frog, koala, owl" />
+
+                <label>Story setting</label>
+                <input value={setting} onChange={(event) => setSetting(event.target.value)} placeholder="e.g. rainforest creek" />
+
+                <label>Child strength</label>
+                <input value={strength} onChange={(event) => setStrength(event.target.value)} placeholder="e.g. curious, funny, brave" />
+
+                <label>Workbook goal</label>
+                <textarea value={goal} onChange={(event) => setGoal(event.target.value)} placeholder="e.g. using a body break before school" />
 
                 <button onClick={() => setGenerated(true)}>Generate Workbook</button>
-                {generated && <button onClick={() => window.print()}>Print Workbook</button>}
+                <button className="secondaryButton" onClick={copyWorkbookText}>{copied ? "Copied" : "Copy Workbook Text"}</button>
+                {generated && <button className="secondaryButton" onClick={() => window.print()}>Print Workbook</button>}
               </div>
 
               <div className="bookPreview">
                 {!generated ? (
-                  <p>Fill in the form and click Generate Workbook.</p>
+                  <div className="emptyPreview">
+                    <h2>Ready when you are.</h2>
+                    <p>Fill in the form and click Generate Workbook.</p>
+                  </div>
                 ) : (
                   pages.map((page, index) => (
-                    <div className="printPage" key={page.title}>
+                    <article className="printPage" key={page.title}>
                       <p className="pageNumber">Page {index + 1}</p>
                       <h2>{page.title}</h2>
                       <h3>{page.subtitle}</h3>
                       <p>{page.body}</p>
+                      <div className="promptBox">{page.prompt}</div>
                       <div className="drawBox">Draw or write here</div>
-                    </div>
+                    </article>
                   ))
                 )}
               </div>
@@ -130,12 +285,98 @@ function App() {
           </>
         )}
 
-        {active !== "Dashboard" && active !== "Book Creator" && (
-          <section className="welcome">
-            <p className="eyebrow">Coming soon</p>
-            <h1>{active}</h1>
-            <p>This section is ready for us to build next.</p>
-          </section>
+        {active === "Explorer Collection" && (
+          <>
+            <section className="welcome compactHero">
+              <p className="eyebrow">Explorer Collection</p>
+              <h1>Therapeutic story worlds</h1>
+              <p>Choose a theme and send it straight into the Book Creator.</p>
+            </section>
+            <section className="resourceGrid">
+              {focusOptions.map((option) => (
+                <article className="resourceCard" key={option}>
+                  <p className="eyebrow">{option}</p>
+                  <h3>{focusLibrary[option].metaphor.split(".")[0]}.</h3>
+                  <p>{focusLibrary[option].mission}</p>
+                  <button onClick={() => openFocusInCreator(option)}>Use this theme</button>
+                </article>
+              ))}
+            </section>
+          </>
+        )}
+
+        {active === "Parent Guides" && (
+          <>
+            <section className="welcome compactHero">
+              <p className="eyebrow">Parent Guides</p>
+              <h1>Warm scripts for hard moments</h1>
+              <p>Simple co-regulation language that can be printed, copied or adapted.</p>
+            </section>
+            <section className="guidePanel">
+              <div className="guideControls">
+                <label>Guide focus</label>
+                <select value={focus} onChange={(event) => setFocus(event.target.value as Focus)}>
+                  {focusOptions.map((option) => (
+                    <option key={option}>{option}</option>
+                  ))}
+                </select>
+              </div>
+              <article className="parentGuideCard">
+                <p className="eyebrow">Try saying</p>
+                <h2>“{content.parentLine}”</h2>
+                <p><strong>What to notice:</strong> {content.bodyClue}.</p>
+                <p><strong>Helpful next step:</strong> {content.tinyStep}</p>
+                <p><strong>Home activity:</strong> {content.activity}</p>
+                <button onClick={() => window.print()}>Print guide</button>
+              </article>
+            </section>
+          </>
+        )}
+
+        {active === "Resource Library" && (
+          <>
+            <section className="welcome compactHero">
+              <p className="eyebrow">Resource Library</p>
+              <h1>Printable therapy tools</h1>
+              <p>A starter library for worksheets, visuals and activity prompts.</p>
+            </section>
+            <section className="libraryTable">
+              {resourceLibrary.map((resource) => (
+                <article className="libraryRow" key={resource.title}>
+                  <div>
+                    <p className="eyebrow">{resource.type} · Ages {resource.age}</p>
+                    <h3>{resource.title}</h3>
+                    <p>{resource.focus}</p>
+                  </div>
+                  <button onClick={() => openFocusInCreator(resource.focus)}>Create from this</button>
+                </article>
+              ))}
+            </section>
+          </>
+        )}
+
+        {active === "Settings" && (
+          <>
+            <section className="welcome compactHero">
+              <p className="eyebrow">Settings</p>
+              <h1>Studio preferences</h1>
+              <p>These are local design controls for this prototype.</p>
+            </section>
+            <section className="settingsPanel">
+              <label>Default writing tone</label>
+              <select value={tone} onChange={(event) => setTone(event.target.value)}>
+                <option>gentle and playful</option>
+                <option>calm and professional</option>
+                <option>child-led and imaginative</option>
+                <option>brief and practical</option>
+              </select>
+              <div className="settingPreview">
+                <p className="eyebrow">Current tone</p>
+                <h2>{tone}</h2>
+                <p>Future versions can save this to a profile, template library or client-safe workspace.</p>
+              </div>
+            </section>
+          </>
         )}
       </main>
     </div>
