@@ -237,7 +237,7 @@ button {
 
 .creator {
   display: grid;
-  grid-template-columns: minmax(290px, 410px) minmax(0, 1fr);
+  grid-template-columns: minmax(290px, 430px) minmax(0, 1fr);
   gap: 26px;
   align-items: start;
 }
@@ -296,6 +296,58 @@ button {
   margin-top: 14px;
 }
 
+.choiceGrid {
+  display: grid;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.animalChoiceGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.themeChoiceGrid {
+  grid-template-columns: 1fr;
+}
+
+.choiceGrid .choiceCard {
+  align-items: flex-start;
+  background: #fffaf2;
+  border: 1px solid rgba(85, 112, 95, 0.16);
+  border-radius: 18px;
+  color: #263b32;
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  min-height: 96px;
+  padding: 12px;
+  text-align: left;
+  width: auto;
+}
+
+.choiceGrid .choiceCard:hover,
+.choiceGrid .choiceCard.selected {
+  background: #eaf0e4;
+  border-color: rgba(85, 112, 95, 0.5);
+  transform: translateY(-1px);
+}
+
+.choiceEmoji {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.choiceCard strong {
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.choiceCard small {
+  color: #65746c;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
 .bookPreview {
   padding: 24px;
 }
@@ -328,6 +380,48 @@ button {
   min-height: 620px;
   overflow: hidden;
   position: relative;
+}
+
+.printPage.theme-rainforest {
+  background:
+    radial-gradient(circle at 90% 10%, rgba(154, 184, 135, 0.32), transparent 15rem),
+    radial-gradient(circle at 8% 90%, rgba(133, 178, 172, 0.22), transparent 14rem),
+    #fffaf2;
+}
+
+.printPage.theme-rockpool {
+  background:
+    radial-gradient(circle at 88% 12%, rgba(132, 205, 217, 0.32), transparent 15rem),
+    radial-gradient(circle at 10% 88%, rgba(241, 188, 152, 0.24), transparent 14rem),
+    #fffaf2;
+}
+
+.printPage.theme-burrow {
+  background:
+    radial-gradient(circle at 85% 14%, rgba(227, 180, 111, 0.28), transparent 15rem),
+    radial-gradient(circle at 12% 88%, rgba(147, 116, 86, 0.16), transparent 14rem),
+    #fffaf2;
+}
+
+.printPage.theme-garden {
+  background:
+    radial-gradient(circle at 88% 12%, rgba(238, 171, 190, 0.3), transparent 15rem),
+    radial-gradient(circle at 12% 86%, rgba(176, 205, 143, 0.24), transparent 14rem),
+    #fffaf2;
+}
+
+.printPage.theme-stars {
+  background:
+    radial-gradient(circle at 84% 10%, rgba(174, 164, 224, 0.34), transparent 15rem),
+    radial-gradient(circle at 10% 88%, rgba(74, 94, 136, 0.16), transparent 14rem),
+    #fffaf2;
+}
+
+.printPage.theme-mountain {
+  background:
+    radial-gradient(circle at 86% 12%, rgba(142, 186, 210, 0.3), transparent 15rem),
+    radial-gradient(circle at 12% 88%, rgba(190, 205, 180, 0.26), transparent 14rem),
+    #fffaf2;
 }
 
 .printPage.coverPage {
@@ -363,6 +457,58 @@ button {
   border: 1px solid rgba(85, 112, 95, 0.14);
   border-radius: 999px;
   padding: 8px 12px;
+}
+
+.storyScene {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.46);
+  border: 1px solid rgba(85, 112, 95, 0.12);
+  border-radius: 28px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 0 0 22px;
+  min-height: 110px;
+  overflow: hidden;
+  padding: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.storyScene::before,
+.storyScene::after {
+  content: "";
+  border-radius: 999px;
+  position: absolute;
+  z-index: -1;
+}
+
+.storyScene::before {
+  background: rgba(85, 112, 95, 0.08);
+  height: 90px;
+  left: 12%;
+  top: 18px;
+  width: 90px;
+}
+
+.storyScene::after {
+  background: rgba(166, 118, 86, 0.08);
+  bottom: 10px;
+  height: 80px;
+  right: 14%;
+  width: 80px;
+}
+
+.storyScene span {
+  display: inline-grid;
+  filter: drop-shadow(0 12px 16px rgba(38, 59, 50, 0.12));
+  font-size: clamp(34px, 6vw, 56px);
+  place-items: center;
+}
+
+.storyScene span:nth-child(2) {
+  font-size: clamp(56px, 8vw, 82px);
+  transform: translateY(5px);
 }
 
 .printPage h2 {
@@ -594,6 +740,10 @@ button {
   .libraryRow button {
     width: 100%;
   }
+
+  .animalChoiceGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media print {
@@ -646,81 +796,96 @@ button {
     min-height: 0;
     margin: 0;
     overflow: hidden;
-    padding: 16mm 17mm;
+    padding: 13mm 16mm;
     width: 210mm;
   }
 
   .printHeader {
-    margin-bottom: 10mm;
+    margin-bottom: 6mm;
   }
 
   .pageNumber,
   .pageBadge {
-    font-size: 10px;
+    font-size: 9px;
     letter-spacing: 0.12em;
   }
 
   .pageBadge {
-    padding: 6px 10px;
+    padding: 5px 9px;
+  }
+
+  .storyScene {
+    border-radius: 18px;
+    margin-bottom: 5mm;
+    min-height: 28mm;
+    padding: 3mm;
+  }
+
+  .storyScene span {
+    font-size: 26px;
+  }
+
+  .storyScene span:nth-child(2) {
+    font-size: 42px;
   }
 
   .printPage h2 {
-    font-size: 39px;
+    font-size: 35px;
     letter-spacing: -0.015em;
     line-height: 1.02;
-    margin-bottom: 4mm;
+    margin-bottom: 3mm;
     word-spacing: 0.1em;
   }
 
   .printPage h3 {
-    font-size: 16px;
-    margin-bottom: 5mm;
+    font-size: 15px;
+    margin-bottom: 4mm;
   }
 
   .pageBody {
-    font-size: 15px;
-    line-height: 1.52;
+    font-size: 14px;
+    line-height: 1.42;
   }
 
   .promptBox {
-    font-size: 14px;
-    line-height: 1.42;
-    margin-top: 6mm;
-    padding: 4mm;
+    font-size: 13px;
+    line-height: 1.35;
+    margin-top: 5mm;
+    padding: 3.5mm;
   }
 
   .promptBox strong {
-    font-size: 11px;
+    font-size: 10px;
     margin-bottom: 2mm;
   }
 
   .activityGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 3mm;
-    margin-top: 4mm;
+    gap: 2.5mm;
+    margin-top: 3.5mm;
   }
 
   .activityTile {
-    border-radius: 12px;
-    font-size: 13px;
-    min-height: 11mm;
-    padding: 2mm;
+    border-radius: 10px;
+    font-size: 12px;
+    min-height: 9mm;
+    padding: 1.8mm;
   }
 
   .drawBox {
     flex: 1;
-    font-size: 13px;
-    margin-top: 5mm;
+    font-size: 12px;
+    margin-top: 4mm;
     min-height: 0;
   }
 
   .decorOne {
-    height: 120px;
-    width: 120px;
+    height: 100px;
+    width: 100px;
   }
 
   .decorTwo {
-    height: 110px;
-    width: 110px;
+    height: 96px;
+    width: 96px;
   }
 }
