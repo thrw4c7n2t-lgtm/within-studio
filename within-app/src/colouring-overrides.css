@@ -1,0 +1,89 @@
+.printPage.style-colouring .storyScene {
+  background:
+    linear-gradient(180deg, #ffffff 0%, #ffffff 62%, #fdfdfd 62%, #ffffff 100%) !important;
+  border: 2px solid #17201b;
+  min-height: 150px;
+}
+
+.printPage.style-colouring .storyScene::before,
+.printPage.style-colouring .storyScene::after {
+  content: "";
+  position: absolute;
+  border: 2px solid #17201b;
+  background: transparent;
+  z-index: 1;
+}
+
+.printPage.style-colouring .storyScene::before {
+  width: 82%;
+  height: 54px;
+  left: 9%;
+  bottom: -27px;
+  border-radius: 50% 50% 0 0;
+}
+
+.printPage.style-colouring .storyScene::after {
+  width: 22%;
+  height: 82px;
+  left: 39%;
+  bottom: -18px;
+  border-radius: 999px 999px 0 0;
+  transform: rotate(4deg);
+}
+
+.printPage.style-colouring .sceneStickerStrip {
+  gap: 18px;
+}
+
+.printPage.style-colouring .sceneStickerStrip span {
+  align-items: center;
+  background: #ffffff;
+  border: 2px solid #17201b;
+  border-radius: 999px;
+  display: inline-flex;
+  filter: grayscale(1) contrast(1.45);
+  height: 58px;
+  justify-content: center;
+  outline: 3px solid #ffffff;
+  width: 58px;
+}
+
+.printPage.style-colouring .sceneStickerStrip span:nth-child(2) {
+  height: 82px;
+  width: 82px;
+}
+
+.printPage.style-colouring .drawBox {
+  background:
+    repeating-linear-gradient(0deg, transparent 0, transparent 28px, rgba(23, 32, 27, 0.08) 29px),
+    #ffffff !important;
+  border: 2px dashed #17201b;
+}
+
+.printPage.style-colouring .activityTile,
+.printPage.style-colouring .promptBox,
+.printPage.style-colouring .pageBadge {
+  border-width: 2px;
+}
+
+.printPage.style-colouring .pageNumber,
+.printPage.style-colouring .pageBadge,
+.printPage.style-colouring .promptBox strong {
+  color: #17201b;
+}
+
+@media print {
+  .printPage.style-colouring .storyScene {
+    min-height: 34mm;
+  }
+
+  .printPage.style-colouring .sceneStickerStrip span {
+    height: 12mm;
+    width: 12mm;
+  }
+
+  .printPage.style-colouring .sceneStickerStrip span:nth-child(2) {
+    height: 18mm;
+    width: 18mm;
+  }
+}
