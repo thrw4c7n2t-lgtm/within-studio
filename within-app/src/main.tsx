@@ -6,6 +6,7 @@ import './print-overrides.css'
 import './storybook-polish.css'
 import './front-cover.css'
 import './front-cover-fixes.css'
+import './front-cover-bold.css'
 import './grammar-fixes.ts'
 import './front-cover.ts'
 
