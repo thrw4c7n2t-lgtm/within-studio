@@ -5,19 +5,42 @@ function makeCoverCard(label: string, value: string) {
   return card;
 }
 
+function toTitleCase(value: string) {
+  return value
+    .split(" ")
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function getCoverDetails(cover: HTMLElement) {
+  const tileValues = Array.from(cover.querySelectorAll<HTMLElement>(".activityTile")).map((tile) => tile.textContent?.trim() ?? "");
+  const bodyText = cover.querySelector<HTMLElement>(".pageBody")?.textContent ?? "";
+  const subtitleText = cover.querySelector<HTMLElement>("h3")?.textContent ?? "";
+  const promptText = cover.querySelector<HTMLElement>(".promptBox")?.textContent ?? "";
+
+  const animalFromBody = bodyText.match(/meets\s+([^,]+),/i)?.[1]?.trim();
+  const worldFromSubtitle = subtitleText.match(/An?\s+(.+?)\s+adventure/i)?.[1]?.trim();
+  const strengthFromPrompt = promptText
+    .replace(/Explorer strength/i, "")
+    .split(".")[0]
+    ?.trim();
+
+  return {
+    animal: tileValues[0] || animalFromBody || "Animal guide",
+    world: tileValues[1] || (worldFromSubtitle ? toTitleCase(worldFromSubtitle) : "Story world"),
+    strength: tileValues[2] || strengthFromPrompt || "Special strength",
+  };
+}
+
 function enhanceFrontCover() {
   const coverPages = document.querySelectorAll<HTMLElement>(".bookPreview > .printPage.coverPage");
 
   coverPages.forEach((cover) => {
-    const signature = [
-      cover.className,
-      cover.querySelector("h2")?.textContent ?? "",
-      cover.querySelector("h3")?.textContent ?? "",
-      Array.from(cover.querySelectorAll(".activityTile")).map((tile) => tile.textContent?.trim()).join("|"),
-    ].join("::");
+    if (cover.classList.contains("frontCoverPage") && cover.querySelector(".coverFeatureCard")) {
+      return;
+    }
 
-    if (cover.dataset.frontCoverSignature === signature) return;
-    cover.dataset.frontCoverSignature = signature;
     cover.classList.add("frontCoverPage");
 
     const badge = cover.querySelector<HTMLElement>(".pageBadge");
@@ -33,7 +56,7 @@ function enhanceFrontCover() {
     const promptBox = cover.querySelector<HTMLElement>(".promptBox");
     const activityGrid = cover.querySelector<HTMLElement>(".activityGrid");
     const drawBox = cover.querySelector<HTMLElement>(".drawBox");
-    const tiles = Array.from(cover.querySelectorAll<HTMLElement>(".activityTile")).map((tile) => tile.textContent?.trim() ?? "");
+    const details = getCoverDetails(cover);
 
     if (title) title.classList.add("frontCoverTitle");
     if (subtitle) subtitle.classList.add("frontCoverSubtitle");
@@ -46,9 +69,9 @@ function enhanceFrontCover() {
       activityGrid.classList.add("frontCoverFeatures");
       activityGrid.innerHTML = "";
       activityGrid.append(
-        makeCoverCard("Animal guide", tiles[0] || "Explorer guide"),
-        makeCoverCard("Story world", tiles[1] || "Adventure world"),
-        makeCoverCard("Special strength", tiles[2] || "Tiny brave steps"),
+        makeCoverCard("Animal guide", details.animal),
+        makeCoverCard("Story world", details.world),
+        makeCoverCard("Special strength", details.strength),
       );
     }
 
