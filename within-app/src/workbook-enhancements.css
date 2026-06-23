@@ -1,0 +1,377 @@
+.fullColouringPage {
+  background: #fffef9 !important;
+}
+
+.fullColouringPage h2 {
+  margin-bottom: 8px;
+}
+
+.fullColouringCanvas {
+  border: 3px solid #24382f;
+  border-radius: 30px;
+  flex: 1;
+  margin: 16px 0 18px;
+  min-height: 540px;
+  overflow: hidden;
+  position: relative;
+  background: #ffffff;
+}
+
+.colouringSky,
+.colouringGround,
+.colouringPath,
+.colouringSun,
+.colouringCloud,
+.colouringObject,
+.colouringAnimalBadge {
+  position: absolute;
+}
+
+.colouringSky {
+  border: 2px solid #24382f;
+  border-radius: 0 0 48% 48%;
+  height: 34%;
+  left: 4%;
+  top: 4%;
+  width: 92%;
+}
+
+.colouringGround {
+  border: 2px solid #24382f;
+  border-radius: 50% 50% 0 0;
+  bottom: -6%;
+  height: 38%;
+  left: -8%;
+  width: 116%;
+}
+
+.colouringPath {
+  border: 2px solid #24382f;
+  border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+  bottom: -1%;
+  height: 42%;
+  left: 34%;
+  transform: rotate(4deg);
+  width: 30%;
+}
+
+.colouringSun {
+  border: 3px solid #24382f;
+  border-radius: 999px;
+  height: 80px;
+  right: 12%;
+  top: 10%;
+  width: 80px;
+}
+
+.colouringSun::before,
+.colouringSun::after {
+  content: "";
+  border-top: 3px solid #24382f;
+  left: -20px;
+  position: absolute;
+  top: 50%;
+  width: 120px;
+}
+
+.colouringSun::after {
+  transform: rotate(90deg);
+}
+
+.colouringCloud {
+  border: 3px solid #24382f;
+  border-radius: 999px;
+  height: 42px;
+  width: 120px;
+}
+
+.colouringCloud::before,
+.colouringCloud::after {
+  content: "";
+  background: #ffffff;
+  border: 3px solid #24382f;
+  border-radius: 999px;
+  height: 58px;
+  position: absolute;
+  top: -24px;
+  width: 58px;
+}
+
+.colouringCloud::before {
+  left: 18px;
+}
+
+.colouringCloud::after {
+  right: 18px;
+}
+
+.cloudOne {
+  left: 12%;
+  top: 14%;
+}
+
+.cloudTwo {
+  right: 24%;
+  top: 22%;
+  transform: scale(0.8);
+}
+
+.colouringAnimalBadge {
+  align-items: center;
+  border: 3px solid #24382f;
+  border-radius: 28px;
+  bottom: 19%;
+  display: flex;
+  font-weight: 900;
+  justify-content: center;
+  left: 50%;
+  min-height: 84px;
+  padding: 12px 18px;
+  text-align: center;
+  transform: translateX(-50%);
+  width: 190px;
+}
+
+.colouringObject {
+  align-items: center;
+  border: 3px solid #24382f;
+  border-radius: 999px;
+  display: flex;
+  font-weight: 850;
+  justify-content: center;
+  min-height: 74px;
+  padding: 10px;
+  text-align: center;
+  width: 150px;
+}
+
+.objectOne {
+  bottom: 34%;
+  left: 7%;
+}
+
+.objectTwo {
+  bottom: 42%;
+  right: 8%;
+}
+
+.objectThree {
+  bottom: 14%;
+  left: 11%;
+}
+
+.objectFour {
+  bottom: 12%;
+  right: 11%;
+}
+
+.colouring-garden .colouringObject,
+.colouring-rainforest .colouringObject {
+  border-radius: 50% 50% 45% 45%;
+}
+
+.colouring-rockpool .colouringObject {
+  border-radius: 50% 45% 55% 40%;
+}
+
+.colouring-stars .colouringSun {
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-35deg);
+}
+
+.colouring-stars .colouringSun::before,
+.colouring-stars .colouringSun::after {
+  display: none;
+}
+
+.colouring-burrow .colouringSky {
+  border-radius: 999px 999px 40% 40%;
+}
+
+.colouring-mountain .colouringGround {
+  border-radius: 0;
+  clip-path: polygon(0 100%, 20% 28%, 38% 72%, 55% 20%, 75% 62%, 100% 18%, 100% 100%);
+}
+
+.colouringPromptStrip {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.colouringPromptStrip span {
+  border: 2px dashed #24382f;
+  border-radius: 18px;
+  color: #24382f;
+  font-size: 13px;
+  font-weight: 800;
+  min-height: 58px;
+  padding: 12px;
+  text-align: center;
+}
+
+.activityBox {
+  align-items: stretch;
+  display: grid;
+  gap: 14px;
+  justify-content: stretch;
+  padding: 18px;
+  text-align: center;
+}
+
+.activityBox strong {
+  color: #40544a;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.badgeCircles,
+.trailSteps,
+.weatherShapes,
+.cueSteps,
+.reflectionStars {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.badgeCircles span,
+.trailSteps span,
+.weatherShapes span,
+.cueSteps span,
+.reflectionStars span,
+.bodyMapFigure span {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px dashed #d6c6ad;
+  border-radius: 18px;
+  color: #6f6254;
+  display: flex;
+  font-weight: 800;
+  justify-content: center;
+  min-height: 62px;
+  padding: 10px;
+}
+
+.badgeCircles span {
+  border-radius: 999px;
+  min-height: 86px;
+}
+
+.bodyMapFigure {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.weatherShapes {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.weatherShapes span:nth-child(1) {
+  border-radius: 999px 999px 18px 18px;
+}
+
+.weatherShapes span:nth-child(2) {
+  border-style: solid;
+}
+
+.weatherShapes span:nth-child(3) {
+  border-radius: 999px;
+}
+
+.weatherShapes span:nth-child(4) {
+  border-radius: 999px 999px 0 0;
+}
+
+.printPage.style-colouring .activityBox span,
+.printPage.style-colouring .colouringPromptStrip span {
+  background: #ffffff;
+  border-color: #17201b;
+  color: #17201b;
+}
+
+@media print {
+  .fullColouringCanvas {
+    margin: 4mm 0;
+    min-height: 0;
+  }
+
+  .fullColouringPage h2 {
+    font-size: 31px;
+  }
+
+  .colouringPromptStrip {
+    gap: 2.5mm;
+  }
+
+  .colouringPromptStrip span {
+    font-size: 10px;
+    min-height: 12mm;
+    padding: 2mm;
+  }
+
+  .colouringSun {
+    height: 18mm;
+    width: 18mm;
+  }
+
+  .colouringCloud {
+    height: 9mm;
+    width: 26mm;
+  }
+
+  .colouringCloud::before,
+  .colouringCloud::after {
+    height: 12mm;
+    top: -5mm;
+    width: 12mm;
+  }
+
+  .colouringAnimalBadge {
+    bottom: 18%;
+    font-size: 11px;
+    min-height: 17mm;
+    width: 42mm;
+  }
+
+  .colouringObject {
+    font-size: 10px;
+    min-height: 15mm;
+    width: 32mm;
+  }
+
+  .activityBox {
+    gap: 2.5mm;
+    padding: 3mm;
+  }
+
+  .activityBox strong {
+    font-size: 9.5px;
+  }
+
+  .badgeCircles,
+  .trailSteps,
+  .weatherShapes,
+  .cueSteps,
+  .reflectionStars {
+    gap: 2mm;
+  }
+
+  .badgeCircles span,
+  .trailSteps span,
+  .weatherShapes span,
+  .cueSteps span,
+  .reflectionStars span,
+  .bodyMapFigure span {
+    font-size: 9.5px;
+    min-height: 10mm;
+    padding: 1.5mm;
+  }
+
+  .badgeCircles span {
+    min-height: 15mm;
+  }
+}
