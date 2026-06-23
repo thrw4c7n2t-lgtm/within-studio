@@ -1,0 +1,225 @@
+.frontCoverPage {
+  position: relative;
+  overflow: hidden;
+}
+
+.frontCoverPage::before,
+.frontCoverPage::after {
+  content: "";
+  border-radius: 999px;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.frontCoverPage::before {
+  height: 340px;
+  right: -110px;
+  top: 110px;
+  width: 340px;
+}
+
+.frontCoverPage::after {
+  bottom: -150px;
+  height: 380px;
+  left: -120px;
+  width: 380px;
+}
+
+.frontCoverPage.theme-rainforest::before {
+  background: rgba(39, 148, 116, 0.22);
+}
+
+.frontCoverPage.theme-rainforest::after {
+  background: rgba(246, 188, 98, 0.24);
+}
+
+.frontCoverPage.theme-rockpool::before {
+  background: rgba(0, 168, 204, 0.24);
+}
+
+.frontCoverPage.theme-rockpool::after {
+  background: rgba(255, 153, 117, 0.25);
+}
+
+.frontCoverPage.theme-burrow::before {
+  background: rgba(214, 136, 67, 0.24);
+}
+
+.frontCoverPage.theme-burrow::after {
+  background: rgba(126, 84, 55, 0.2);
+}
+
+.frontCoverPage.theme-garden::before {
+  background: rgba(255, 95, 156, 0.22);
+}
+
+.frontCoverPage.theme-garden::after {
+  background: rgba(255, 210, 90, 0.26);
+}
+
+.frontCoverPage.theme-stars::before {
+  background: rgba(111, 102, 236, 0.26);
+}
+
+.frontCoverPage.theme-stars::after {
+  background: rgba(255, 216, 90, 0.22);
+}
+
+.frontCoverPage.theme-mountain::before {
+  background: rgba(74, 163, 211, 0.24);
+}
+
+.frontCoverPage.theme-mountain::after {
+  background: rgba(255, 151, 95, 0.22);
+}
+
+.frontCoverPage > * {
+  position: relative;
+  z-index: 1;
+}
+
+.frontCoverPage .printHeader {
+  margin-bottom: 22px;
+}
+
+.frontCoverTitle {
+  color: #1f352c !important;
+  letter-spacing: -0.055em !important;
+  margin-bottom: 14px !important;
+}
+
+.frontCoverSubtitle {
+  background: rgba(255, 255, 255, 0.78) !important;
+  box-shadow: 0 14px 35px rgba(38, 59, 50, 0.08);
+  font-weight: 900 !important;
+}
+
+.frontCoverScene {
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.95), transparent 11rem),
+    radial-gradient(circle at 86% 26%, rgba(255, 255, 255, 0.55), transparent 12rem),
+    rgba(255, 255, 255, 0.58) !important;
+  border: 3px solid rgba(255, 255, 255, 0.86) !important;
+  box-shadow:
+    0 28px 78px rgba(38, 59, 50, 0.18),
+    inset 0 -36px 70px rgba(38, 59, 50, 0.07) !important;
+  min-height: 330px !important;
+}
+
+.frontCoverScene .sceneSky {
+  background: rgba(255, 255, 255, 0.44);
+  height: 190px;
+}
+
+.frontCoverScene .sceneGround {
+  height: 128px;
+}
+
+.frontCoverScene .scenePath {
+  height: 140px;
+}
+
+.frontCoverScene .sceneStickerStrip {
+  gap: 28px;
+}
+
+.frontCoverScene .sceneStickerStrip span {
+  font-size: clamp(70px, 9vw, 110px) !important;
+}
+
+.frontCoverScene .sceneStickerStrip span:nth-child(2) {
+  font-size: clamp(135px, 15vw, 190px) !important;
+}
+
+.coverFeatureCard {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 2px solid rgba(255, 255, 255, 0.74) !important;
+  box-shadow: 0 14px 36px rgba(38, 59, 50, 0.08);
+}
+
+.coverFeatureCard strong {
+  font-size: 22px;
+}
+
+.coverNamePlate {
+  background: rgba(255, 255, 255, 0.82) !important;
+  border: 2px dashed rgba(38, 59, 50, 0.34) !important;
+  box-shadow: 0 12px 30px rgba(38, 59, 50, 0.06);
+  margin-top: auto !important;
+}
+
+.frontCoverPage.style-colouring::before,
+.frontCoverPage.style-colouring::after,
+.frontCoverPage.style-lowInk::before,
+.frontCoverPage.style-lowInk::after {
+  display: none;
+}
+
+.frontCoverPage.style-colouring .frontCoverScene,
+.frontCoverPage.style-lowInk .frontCoverScene {
+  min-height: 280px !important;
+}
+
+@media print {
+  .frontCoverPage::before {
+    height: 80mm;
+    right: -28mm;
+    top: 26mm;
+    width: 80mm;
+  }
+
+  .frontCoverPage::after {
+    bottom: -32mm;
+    height: 90mm;
+    left: -30mm;
+    width: 90mm;
+  }
+
+  .frontCoverTitle {
+    font-size: 44px !important;
+    margin-bottom: 3mm !important;
+  }
+
+  .frontCoverSubtitle {
+    font-size: 12.5px !important;
+    margin-bottom: 5mm !important;
+  }
+
+  .frontCoverScene {
+    min-height: 88mm !important;
+    margin-bottom: 5mm !important;
+  }
+
+  .frontCoverScene .sceneSky {
+    height: 48mm;
+  }
+
+  .frontCoverScene .sceneGround {
+    height: 32mm;
+  }
+
+  .frontCoverScene .scenePath {
+    height: 35mm;
+  }
+
+  .frontCoverScene .sceneStickerStrip {
+    gap: 6mm;
+  }
+
+  .frontCoverScene .sceneStickerStrip span {
+    font-size: 44px !important;
+  }
+
+  .frontCoverScene .sceneStickerStrip span:nth-child(2) {
+    font-size: 88px !important;
+  }
+
+  .coverFeatureCard strong {
+    font-size: 14px;
+  }
+
+  .coverNamePlate {
+    min-height: 20mm;
+  }
+}
