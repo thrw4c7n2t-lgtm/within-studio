@@ -1,0 +1,78 @@
+/* Final workbook polish: keep Canva templates clean and make app text readable. */
+
+.workbookPage h2,
+.coverTextPanel h2,
+.storyPage h2,
+.fullColouringPage h2 {
+  letter-spacing: 0 !important;
+  word-spacing: 0.12em !important;
+  line-height: 1.08 !important;
+}
+
+.workbookPage .eyebrow,
+.coverTextPanel .eyebrow {
+  letter-spacing: 0.08em !important;
+  word-spacing: 0.08em !important;
+}
+
+.coverTextPanel {
+  max-width: 680px !important;
+  padding: 24px 30px !important;
+}
+
+.coverTextPanel h2 {
+  font-size: clamp(42px, 5.2vw, 62px) !important;
+  margin-bottom: 12px !important;
+}
+
+.coverTextPanel p:last-child {
+  letter-spacing: 0 !important;
+  word-spacing: 0.08em !important;
+}
+
+.storyPage h2,
+.fullColouringPage h2 {
+  font-size: clamp(38px, 4.4vw, 58px) !important;
+}
+
+.storyPage > p:not(.eyebrow) {
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media print {
+  .workbookPage h2,
+  .coverTextPanel h2,
+  .storyPage h2,
+  .fullColouringPage h2 {
+    letter-spacing: 0 !important;
+    word-spacing: 0.12em !important;
+    line-height: 1.08 !important;
+  }
+
+  .workbookPage .eyebrow,
+  .coverTextPanel .eyebrow {
+    letter-spacing: 0.07em !important;
+    word-spacing: 0.06em !important;
+  }
+
+  .coverTextPanel {
+    max-width: 150mm !important;
+    padding: 6mm 8mm !important;
+  }
+
+  .coverTextPanel h2 {
+    font-size: 31px !important;
+  }
+
+  .storyPage h2,
+  .fullColouringPage h2 {
+    font-size: 30px !important;
+  }
+
+  .storyPage > p:not(.eyebrow) {
+    font-size: 11.5px !important;
+    line-height: 1.35 !important;
+  }
+}
