@@ -70,8 +70,6 @@ function createColouringPage(coverPage: HTMLElement) {
 }
 
 function replaceDrawBox(drawBox: HTMLElement, page: HTMLElement) {
-  if (drawBox.dataset.enhanced === "true") return;
-
   const pageClass = Array.from(page.classList).join(" ");
   drawBox.dataset.enhanced = "true";
 
@@ -138,14 +136,34 @@ function renumberPages(preview: Element) {
   });
 }
 
+function getWorkbookSignature(realPages: HTMLElement[]) {
+  return realPages
+    .map((page) => [page.className, page.querySelector("h2")?.textContent, page.querySelector("h3")?.textContent, page.querySelector(".activityTile")?.textContent].join("::"))
+    .join("|");
+}
+
 function enhanceWorkbook() {
-  const preview = document.querySelector(".bookPreview");
+  const preview = document.querySelector<HTMLElement>(".bookPreview");
   if (!preview) return;
 
   const realPages = Array.from(preview.querySelectorAll<HTMLElement>(":scope > .printPage:not(.enhancedBonusPage)"));
   if (realPages.length === 0) return;
 
+  const signature = getWorkbookSignature(realPages);
+  const bonusPage = preview.querySelector(".enhancedBonusPage");
+  const drawBoxes = Array.from(preview.querySelectorAll<HTMLElement>(":scope > .printPage:not(.enhancedBonusPage) .drawBox"));
+  const drawBoxesReady = drawBoxes.length > 0 && drawBoxes.every((drawBox) => drawBox.dataset.enhanced === "true");
+
+  if (preview.dataset.enhancedSignature === signature && bonusPage && drawBoxesReady) {
+    renumberPages(preview);
+    return;
+  }
+
+  preview.dataset.enhancedSignature = signature;
   preview.querySelectorAll(".enhancedBonusPage").forEach((page) => page.remove());
+  drawBoxes.forEach((drawBox) => {
+    delete drawBox.dataset.enhanced;
+  });
 
   const coverPage = realPages[0];
   const colouringPage = createColouringPage(coverPage);
