@@ -1,0 +1,38 @@
+name: Within App Build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'within-app/**'
+      - '.github/workflows/within-app-build.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'within-app/**'
+      - '.github/workflows/within-app-build.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: within-app
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: within-app/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build app
+        run: npm run build
