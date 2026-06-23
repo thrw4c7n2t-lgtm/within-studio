@@ -51,6 +51,10 @@
   z-index: 3;
 }
 
+.assetPage .guidePortrait {
+  display: none;
+}
+
 .wideSceneAsset {
   border-radius: 30px;
   display: block;
@@ -74,7 +78,65 @@
 }
 
 .quietPage {
+  justify-content: flex-start;
+  min-height: 820px;
+  overflow: hidden;
+  position: relative;
   text-align: center;
+}
+
+.quietPage::after {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  bottom: 38px;
+  content: "";
+  height: 190px;
+  left: 50%;
+  opacity: 0.88;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-50%);
+  width: 260px;
+  z-index: 0;
+}
+
+.bookPreview > .quietPage:nth-of-type(4)::after {
+  background-image: url('/assets/starry/bibi-the-butterfly.png');
+  height: 220px;
+  opacity: 0.42;
+}
+
+.bookPreview > .quietPage:nth-of-type(5)::after {
+  background-image: url('/assets/starry/starry-camp-sticker-path.png');
+  height: 210px;
+  opacity: 0.75;
+  width: 320px;
+}
+
+.bookPreview > .quietPage:nth-of-type(6)::after {
+  background-image: url('/assets/starry/starry-camp-sticker-moon.png');
+  height: 190px;
+  opacity: 0.48;
+}
+
+.bookPreview > .quietPage:nth-of-type(7)::after {
+  background-image: url('/assets/starry/starry-camp-sticker-sparkles.png');
+  height: 220px;
+  opacity: 0.9;
+  width: 320px;
+}
+
+.bodyMapReal,
+.pathActivity,
+.goalCard,
+.scriptCard,
+.supportGrid,
+.certificateBox,
+.quietPage > p,
+.quietPage > h2 {
+  position: relative;
+  z-index: 1;
 }
 
 .bodyMapReal {
@@ -160,6 +222,25 @@
   padding: 30px;
 }
 
+.storyPage,
+.fullColouringPage {
+  gap: 14px;
+}
+
+.storyPage h2,
+.fullColouringPage h2,
+.quietPage h2 {
+  letter-spacing: -0.025em;
+  word-spacing: 0.08em;
+}
+
+.storyPage > p:not(.eyebrow),
+.quietPage > p:not(.eyebrow) {
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @media print {
   .assetPage {
     min-height: 0;
@@ -176,10 +257,9 @@
     font-size: 38px;
   }
 
-  .guidePortrait {
-    bottom: 9mm;
-    right: 9mm;
-    width: 34mm;
+  .guidePortrait,
+  .assetPage .guidePortrait {
+    display: none;
   }
 
   .wideSceneAsset {
@@ -190,6 +270,26 @@
   .colouringAsset {
     max-height: none;
     height: 225mm;
+  }
+
+  .quietPage::after {
+    bottom: 12mm;
+    height: 46mm;
+    width: 65mm;
+  }
+
+  .bookPreview > .quietPage:nth-of-type(4)::after {
+    height: 48mm;
+  }
+
+  .bookPreview > .quietPage:nth-of-type(5)::after {
+    height: 42mm;
+    width: 78mm;
+  }
+
+  .bookPreview > .quietPage:nth-of-type(7)::after {
+    height: 44mm;
+    width: 78mm;
   }
 
   .bodyMapReal {
