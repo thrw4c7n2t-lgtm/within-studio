@@ -1,0 +1,113 @@
+.storyScene {
+  min-height: 188px;
+  border-width: 2px;
+  box-shadow: inset 0 -18px 36px rgba(38, 59, 50, 0.04);
+}
+
+.sceneSky {
+  height: 132px;
+  top: 8px;
+}
+
+.sceneGround {
+  height: 96px;
+}
+
+.scenePath {
+  height: 104px;
+  bottom: -12px;
+}
+
+.sceneStickerStrip {
+  gap: 22px;
+}
+
+.sceneStickerStrip span {
+  font-size: clamp(46px, 7vw, 72px);
+}
+
+.sceneStickerStrip span:nth-child(2) {
+  font-size: clamp(82px, 10vw, 116px);
+  transform: translateY(8px);
+}
+
+.printPage.coverPage .storyScene {
+  min-height: 220px;
+}
+
+.printPage.coverPage .sceneStickerStrip span:nth-child(2) {
+  font-size: clamp(96px, 12vw, 132px);
+}
+
+.printPage.style-colouring .storyScene {
+  border: 2px solid #17201b;
+  box-shadow: none;
+}
+
+.printPage.style-colouring .sceneStickerStrip span {
+  filter: grayscale(1) contrast(1.35);
+}
+
+.printPage.style-lowInk .storyScene {
+  box-shadow: none;
+}
+
+@media print {
+  .storyScene {
+    min-height: 38mm;
+    margin-bottom: 4mm;
+  }
+
+  .printPage.coverPage .storyScene {
+    min-height: 42mm;
+  }
+
+  .sceneSky {
+    height: 28mm;
+  }
+
+  .sceneGround {
+    height: 22mm;
+  }
+
+  .scenePath {
+    height: 24mm;
+  }
+
+  .sceneStickerStrip {
+    gap: 5mm;
+  }
+
+  .sceneStickerStrip span {
+    font-size: 30px;
+  }
+
+  .sceneStickerStrip span:nth-child(2) {
+    font-size: 52px;
+  }
+
+  .printPage.coverPage .sceneStickerStrip span:nth-child(2) {
+    font-size: 58px;
+  }
+
+  .printPage h2 {
+    font-size: 31px;
+  }
+
+  .pageBody {
+    font-size: 12.5px;
+    line-height: 1.32;
+  }
+
+  .promptBox {
+    margin-top: 3.5mm;
+  }
+
+  .activityGrid {
+    margin-top: 2.5mm;
+  }
+
+  .drawBox {
+    margin-top: 3mm;
+  }
+}
