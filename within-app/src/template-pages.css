@@ -1,0 +1,160 @@
+.templateImagePage {
+  background: #fffaf2 !important;
+  padding: 0 !important;
+  position: relative;
+}
+
+.templatePageAsset {
+  display: block;
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+  z-index: 0;
+}
+
+.templateTextOverlay {
+  position: absolute;
+  z-index: 2;
+  color: #59475c;
+  font-weight: 800;
+  text-align: center;
+}
+
+.templateInstruction {
+  left: 14%;
+  right: 14%;
+  top: 132px;
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+.missionLabel {
+  background: rgba(255, 250, 242, 0.92);
+  border: 1px solid rgba(89, 71, 92, 0.18);
+  border-radius: 999px;
+  min-width: 136px;
+  padding: 10px 16px;
+  box-shadow: 0 8px 26px rgba(47, 47, 47, 0.08);
+}
+
+.missionNotice { left: 27%; top: 67%; }
+.missionName { left: 38%; top: 55%; }
+.missionSupport { left: 55%; top: 43%; }
+.missionAgain { left: 65%; top: 33%; }
+
+.missionGoalOverlay {
+  background: rgba(255, 250, 242, 0.9);
+  border: 1px solid rgba(89, 71, 92, 0.18);
+  border-radius: 18px;
+  bottom: 64px;
+  left: 22%;
+  padding: 10px 18px;
+  right: 22%;
+  font-size: 18px;
+}
+
+.supportIntroOverlay {
+  left: 16%;
+  right: 16%;
+  top: 196px;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.supportCardOverlay {
+  font-size: 18px;
+  line-height: 1.25;
+  width: 21%;
+}
+
+.supportPause { left: 18%; top: 374px; }
+.supportConnect { left: 39.5%; top: 374px; }
+.supportNext { left: 61%; top: 374px; }
+
+.supportScriptOverlay {
+  left: 19%;
+  right: 19%;
+  top: 628px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 25px;
+  line-height: 1.25;
+}
+
+.certificateTitleOverlay {
+  left: 0;
+  right: 0;
+  top: 332px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 40px;
+  letter-spacing: 0.02em;
+}
+
+.certificateChildOverlay {
+  left: 18%;
+  right: 18%;
+  top: 612px;
+  font-size: 24px;
+}
+
+.certificateSentenceOverlay {
+  left: 18%;
+  right: 18%;
+  bottom: 292px;
+  font-size: 20px;
+}
+
+@media print {
+  .templateInstruction {
+    top: 35mm;
+    font-size: 13px;
+  }
+
+  .missionLabel {
+    min-width: 31mm;
+    padding: 2mm 3mm;
+    font-size: 11px;
+  }
+
+  .missionGoalOverlay {
+    bottom: 16mm;
+    font-size: 10px;
+    padding: 2mm 3mm;
+  }
+
+  .supportIntroOverlay {
+    top: 51mm;
+    font-size: 11px;
+  }
+
+  .supportCardOverlay {
+    font-size: 10px;
+  }
+
+  .supportPause,
+  .supportConnect,
+  .supportNext {
+    top: 96mm;
+  }
+
+  .supportScriptOverlay {
+    top: 163mm;
+    font-size: 15px;
+  }
+
+  .certificateTitleOverlay {
+    top: 85mm;
+    font-size: 25px;
+  }
+
+  .certificateChildOverlay {
+    top: 155mm;
+    font-size: 14px;
+  }
+
+  .certificateSentenceOverlay {
+    bottom: 74mm;
+    font-size: 12px;
+  }
+}
