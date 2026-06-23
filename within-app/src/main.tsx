@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import './template-pages.css'
 import App from './App.tsx'
+import './workbook-polish.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
