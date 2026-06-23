@@ -1,160 +1,162 @@
 .templateImagePage {
   background: #fffaf2 !important;
   padding: 0 !important;
-  position: relative;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
-.templatePageAsset {
-  display: block;
-  height: 100%;
-  inset: 0;
-  object-fit: cover;
-  position: absolute;
-  width: 100%;
-  z-index: 0;
+.templateImagePage .templatePageAsset {
+  display: block !important;
+  height: 100% !important;
+  inset: 0 !important;
+  object-fit: cover !important;
+  position: absolute !important;
+  width: 100% !important;
+  z-index: 0 !important;
 }
 
-.templateTextOverlay {
-  position: absolute;
-  z-index: 2;
-  color: #59475c;
-  font-weight: 800;
-  text-align: center;
+.templateImagePage .templateTextOverlay {
+  color: #59475c !important;
+  display: block !important;
+  font-weight: 850 !important;
+  position: absolute !important;
+  text-align: center !important;
+  z-index: 5 !important;
 }
 
-.templateInstruction {
-  left: 14%;
-  right: 14%;
-  top: 132px;
-  font-size: 20px;
-  line-height: 1.35;
+.templateImagePage .templateInstruction {
+  left: 14% !important;
+  right: 14% !important;
+  top: 132px !important;
+  font-size: 20px !important;
+  line-height: 1.35 !important;
 }
 
-.missionLabel {
-  background: rgba(255, 250, 242, 0.92);
-  border: 1px solid rgba(89, 71, 92, 0.18);
-  border-radius: 999px;
-  min-width: 136px;
-  padding: 10px 16px;
-  box-shadow: 0 8px 26px rgba(47, 47, 47, 0.08);
+.templateImagePage .missionLabel {
+  background: rgba(255, 250, 242, 0.94) !important;
+  border: 1px solid rgba(89, 71, 92, 0.22) !important;
+  border-radius: 999px !important;
+  min-width: 136px !important;
+  padding: 10px 16px !important;
+  box-shadow: 0 8px 26px rgba(47, 47, 47, 0.08) !important;
 }
 
-.missionNotice { left: 27%; top: 67%; }
-.missionName { left: 38%; top: 55%; }
-.missionSupport { left: 55%; top: 43%; }
-.missionAgain { left: 65%; top: 33%; }
+.templateImagePage .missionNotice { left: 27% !important; top: 67% !important; }
+.templateImagePage .missionName { left: 38% !important; top: 55% !important; }
+.templateImagePage .missionSupport { left: 55% !important; top: 43% !important; }
+.templateImagePage .missionAgain { left: 65% !important; top: 33% !important; }
 
-.missionGoalOverlay {
-  background: rgba(255, 250, 242, 0.9);
-  border: 1px solid rgba(89, 71, 92, 0.18);
-  border-radius: 18px;
-  bottom: 64px;
-  left: 22%;
-  padding: 10px 18px;
-  right: 22%;
-  font-size: 18px;
+.templateImagePage .missionGoalOverlay {
+  background: rgba(255, 250, 242, 0.94) !important;
+  border: 1px solid rgba(89, 71, 92, 0.22) !important;
+  border-radius: 18px !important;
+  bottom: 64px !important;
+  left: 22% !important;
+  padding: 10px 18px !important;
+  right: 22% !important;
+  font-size: 18px !important;
 }
 
-.supportIntroOverlay {
-  left: 16%;
-  right: 16%;
-  top: 196px;
-  font-size: 18px;
-  line-height: 1.35;
+.templateImagePage .supportIntroOverlay {
+  left: 16% !important;
+  right: 16% !important;
+  top: 196px !important;
+  font-size: 18px !important;
+  line-height: 1.35 !important;
 }
 
-.supportCardOverlay {
-  font-size: 18px;
-  line-height: 1.25;
-  width: 21%;
+.templateImagePage .supportCardOverlay {
+  font-size: 18px !important;
+  line-height: 1.25 !important;
+  width: 21% !important;
 }
 
-.supportPause { left: 18%; top: 374px; }
-.supportConnect { left: 39.5%; top: 374px; }
-.supportNext { left: 61%; top: 374px; }
+.templateImagePage .supportPause { left: 18% !important; top: 374px !important; }
+.templateImagePage .supportConnect { left: 39.5% !important; top: 374px !important; }
+.templateImagePage .supportNext { left: 61% !important; top: 374px !important; }
 
-.supportScriptOverlay {
-  left: 19%;
-  right: 19%;
-  top: 628px;
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 25px;
-  line-height: 1.25;
+.templateImagePage .supportScriptOverlay {
+  left: 19% !important;
+  right: 19% !important;
+  top: 628px !important;
+  font-family: Georgia, 'Times New Roman', serif !important;
+  font-size: 25px !important;
+  line-height: 1.25 !important;
 }
 
-.certificateTitleOverlay {
-  left: 0;
-  right: 0;
-  top: 332px;
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 40px;
-  letter-spacing: 0.02em;
+.templateImagePage .certificateTitleOverlay {
+  left: 0 !important;
+  right: 0 !important;
+  top: 332px !important;
+  font-family: Georgia, 'Times New Roman', serif !important;
+  font-size: 40px !important;
+  letter-spacing: 0.02em !important;
 }
 
-.certificateChildOverlay {
-  left: 18%;
-  right: 18%;
-  top: 612px;
-  font-size: 24px;
+.templateImagePage .certificateChildOverlay {
+  left: 18% !important;
+  right: 18% !important;
+  top: 612px !important;
+  font-size: 24px !important;
 }
 
-.certificateSentenceOverlay {
-  left: 18%;
-  right: 18%;
-  bottom: 292px;
-  font-size: 20px;
+.templateImagePage .certificateSentenceOverlay {
+  left: 18% !important;
+  right: 18% !important;
+  bottom: 292px !important;
+  font-size: 20px !important;
 }
 
 @media print {
-  .templateInstruction {
-    top: 35mm;
-    font-size: 13px;
+  .templateImagePage .templateInstruction {
+    top: 35mm !important;
+    font-size: 13px !important;
   }
 
-  .missionLabel {
-    min-width: 31mm;
-    padding: 2mm 3mm;
-    font-size: 11px;
+  .templateImagePage .missionLabel {
+    min-width: 31mm !important;
+    padding: 2mm 3mm !important;
+    font-size: 11px !important;
   }
 
-  .missionGoalOverlay {
-    bottom: 16mm;
-    font-size: 10px;
-    padding: 2mm 3mm;
+  .templateImagePage .missionGoalOverlay {
+    bottom: 16mm !important;
+    font-size: 10px !important;
+    padding: 2mm 3mm !important;
   }
 
-  .supportIntroOverlay {
-    top: 51mm;
-    font-size: 11px;
+  .templateImagePage .supportIntroOverlay {
+    top: 51mm !important;
+    font-size: 11px !important;
   }
 
-  .supportCardOverlay {
-    font-size: 10px;
+  .templateImagePage .supportCardOverlay {
+    font-size: 10px !important;
   }
 
-  .supportPause,
-  .supportConnect,
-  .supportNext {
-    top: 96mm;
+  .templateImagePage .supportPause,
+  .templateImagePage .supportConnect,
+  .templateImagePage .supportNext {
+    top: 96mm !important;
   }
 
-  .supportScriptOverlay {
-    top: 163mm;
-    font-size: 15px;
+  .templateImagePage .supportScriptOverlay {
+    top: 163mm !important;
+    font-size: 15px !important;
   }
 
-  .certificateTitleOverlay {
-    top: 85mm;
-    font-size: 25px;
+  .templateImagePage .certificateTitleOverlay {
+    top: 85mm !important;
+    font-size: 25px !important;
   }
 
-  .certificateChildOverlay {
-    top: 155mm;
-    font-size: 14px;
+  .templateImagePage .certificateChildOverlay {
+    top: 155mm !important;
+    font-size: 14px !important;
   }
 
-  .certificateSentenceOverlay {
-    bottom: 74mm;
-    font-size: 12px;
+  .templateImagePage .certificateSentenceOverlay {
+    bottom: 74mm !important;
+    font-size: 12px !important;
   }
 }
