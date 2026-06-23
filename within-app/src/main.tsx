@@ -5,6 +5,7 @@ import App from './App.tsx'
 import './print-overrides.css'
 import './storybook-polish.css'
 import './front-cover.css'
+import './front-cover-fixes.css'
 import './grammar-fixes.ts'
 import './front-cover.ts'
 
