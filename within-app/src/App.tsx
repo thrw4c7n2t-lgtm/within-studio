@@ -17,6 +17,8 @@ type Focus =
   | "Sensory regulation"
   | "Confidence";
 
+type IllustrationStyle = "storybook" | "colouring" | "lowInk";
+
 type FocusContent = {
   metaphor: string;
   bodyClue: string;
@@ -72,6 +74,12 @@ const focusOptions: Focus[] = [
   "Friendship",
   "Sensory regulation",
   "Confidence",
+];
+
+const illustrationStyles: { id: IllustrationStyle; emoji: string; name: string; label: string }[] = [
+  { id: "storybook", emoji: "🎨", name: "Colour storybook", label: "soft colour panels" },
+  { id: "colouring", emoji: "✏️", name: "Colouring page", label: "black-and-white outlines" },
+  { id: "lowInk", emoji: "🖨️", name: "Low-ink simple", label: "lighter printable pages" },
 ];
 
 const animalGuides: AnimalGuide[] = [
@@ -242,6 +250,7 @@ function App() {
   const [focus, setFocus] = useState<Focus>("Big feelings");
   const [animalGuideId, setAnimalGuideId] = useState("frog");
   const [worldThemeId, setWorldThemeId] = useState("rainforest");
+  const [illustrationStyle, setIllustrationStyle] = useState<IllustrationStyle>("storybook");
   const [strength, setStrength] = useState("noticing small details");
   const [goal, setGoal] = useState("pausing before the feeling gets too big");
   const [generated, setGenerated] = useState(false);
@@ -255,7 +264,7 @@ function App() {
   const childGoal = goal.trim() || "taking one tiny helpful step";
   const content = focusLibrary[focus];
 
-  const sceneItems = [worldTheme.emoji, animalGuide.emoji, "✨", "🌱"];
+  const sceneItems = useMemo(() => [worldTheme.emoji, animalGuide.emoji, "✨", "🌱"], [animalGuide.emoji, worldTheme.emoji]);
 
   const pages: WorkbookPage[] = useMemo(
     () => [
@@ -297,7 +306,7 @@ function App() {
         badge: "Try this tool",
         title: "Try This Tool",
         subtitle: "One small helpful step",
-        body: `${content.tinyStep} ${animalGuide.name} can practise this with you.` ,
+        body: `${content.tinyStep} ${animalGuide.name} can practise this with you.`,
         activityTitle: "Creative activity",
         prompt: content.activity,
         activityItems: ["First try", "What changed?", "What could help next?"],
@@ -444,6 +453,22 @@ function App() {
                   ))}
                 </div>
 
+                <label>Picture style</label>
+                <div className="choiceGrid styleChoiceGrid">
+                  {illustrationStyles.map((style) => (
+                    <button
+                      type="button"
+                      key={style.id}
+                      className={illustrationStyle === style.id ? "choiceCard selected" : "choiceCard"}
+                      onClick={() => setIllustrationStyle(style.id)}
+                    >
+                      <span className="choiceEmoji">{style.emoji}</span>
+                      <strong>{style.name}</strong>
+                      <small>{style.label}</small>
+                    </button>
+                  ))}
+                </div>
+
                 <label>Child strength</label>
                 <input value={strength} onChange={(event) => setStrength(event.target.value)} placeholder="e.g. curious, funny, brave" />
 
@@ -463,17 +488,22 @@ function App() {
                   </div>
                 ) : (
                   pages.map((page, index) => (
-                    <article className={`printPage ${page.kind}`} key={page.title}>
+                    <article className={`printPage ${page.kind} style-${illustrationStyle}`} key={page.title}>
                       <div className="pageDecor decorOne" aria-hidden="true" />
                       <div className="pageDecor decorTwo" aria-hidden="true" />
                       <header className="printHeader">
                         <p className="pageNumber">Page {index + 1}</p>
                         <span className="pageBadge">{page.badge}</span>
                       </header>
-                      <div className="storyScene" aria-hidden="true">
-                        {page.scene.map((item, sceneIndex) => (
-                          <span key={`${page.title}-${item}-${sceneIndex}`}>{item}</span>
-                        ))}
+                      <div className={`storyScene storyScene-${worldTheme.id}`} aria-hidden="true">
+                        <div className="sceneSky" />
+                        <div className="sceneGround" />
+                        <div className="scenePath" />
+                        <div className="sceneStickerStrip">
+                          {page.scene.map((item, sceneIndex) => (
+                            <span key={`${page.title}-${item}-${sceneIndex}`}>{item}</span>
+                          ))}
+                        </div>
                       </div>
                       <h2><span>{page.title}</span></h2>
                       <h3>{page.subtitle}</h3>
