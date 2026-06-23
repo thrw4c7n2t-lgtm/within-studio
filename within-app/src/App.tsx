@@ -224,55 +224,35 @@ function App() {
                   <>
                     <article className={`workbookPage coverPage theme-${worldTheme.id} ${isStarry ? "assetPage" : ""}`}>
                       {isStarry && <img className="coverAsset" src={starryAssets.starryCover} alt="Starry camp illustration" />}
-                      <div className="coverTextPanel">
-                        <p className="eyebrow">Within Explorer Collection</p>
-                        <h2>{name}'s Explorer Journal</h2>
-                        <p>{worldTheme.article} {worldTheme.name.toLowerCase()} adventure about {focus.toLowerCase()}</p>
-                      </div>
+                      <div className="coverTextPanel"><p className="eyebrow">Within Explorer Collection</p><h2>{name}'s Explorer Journal</h2><p>{worldTheme.article} {worldTheme.name.toLowerCase()} adventure about {focus.toLowerCase()}</p></div>
                       {isBibi && <img className="guidePortrait" src={starryAssets.bibi} alt="Bibi the Butterfly" />}
                     </article>
 
                     <article className="workbookPage storyPage">
-                      <p className="eyebrow">Story page · Page 2</p>
-                      <h2>Meet {animalGuide.name}</h2>
-                      <p>{name} steps into {worldTheme.setting}. {animalGuide.name} is waiting nearby. {animalGuide.helperLine}</p>
+                      <p className="eyebrow">Story page · Page 2</p><h2>Meet {animalGuide.name}</h2><p>{name} steps into {worldTheme.setting}. {animalGuide.name} is waiting nearby. {animalGuide.helperLine}</p>
                       {isStarry ? <img className="wideSceneAsset" src={starryAssets.starryCover} alt="Starry camp scene" /> : <FallbackScene theme={worldTheme} animal={animalGuide} />}
                     </article>
 
                     <article className="workbookPage fullColouringPage">
-                      <p className="eyebrow">Full colouring page · Page 3</p>
-                      <h2>Colour the {worldTheme.name.toLowerCase()}</h2>
+                      <p className="eyebrow">Full colouring page · Page 3</p><h2>Colour the {worldTheme.name.toLowerCase()}</h2>
                       {isStarry ? <img className="colouringAsset" src={starryAssets.starryColouring} alt="Starry camp colouring scene" /> : <FallbackColouring theme={worldTheme} animal={animalGuide} />}
                     </article>
 
-                    <article className="workbookPage activityPage quietPage">
-                      <p className="eyebrow">Body map · Page 4</p>
-                      <h2>Where do I feel it?</h2>
-                      <p>Sometimes {focus.toLowerCase()} can show up as {copy.bodyClue}. Circle or colour the places your body gives you clues.</p>
-                      <div className="bodyMapReal"><div className="head" /><div className="body" /><div className="arm left" /><div className="arm right" /><div className="leg left" /><div className="leg right" /></div>
-                    </article>
-
-                    <article className="workbookPage activityPage quietPage">
-                      <p className="eyebrow">Mission path · Page 5</p>
-                      <h2>My tiny mission</h2>
-                      <p>{copy.mission}</p>
-                      <div className="pathActivity"><span>Notice</span><span>Name it</span><span>Choose support</span><span>Try again</span></div>
-                      <div className="goalCard"><span>Tiny goal</span><strong>{goal}</strong></div>
-                    </article>
-
-                    <article className="workbookPage grownupPage quietPage">
-                      <p className="eyebrow">Grown-up support · Page 6</p>
-                      <h2>Support script</h2>
-                      <div className="scriptCard">“{copy.parentLine}”</div>
-                      <div className="supportGrid"><div><strong>Pause</strong><span>Lower your voice.</span></div><div><strong>Connect</strong><span>Name the feeling.</span></div><div><strong>Next</strong><span>Offer one small step.</span></div></div>
-                    </article>
-
-                    <article className="workbookPage reflectionPage quietPage">
-                      <p className="eyebrow">Reflection · Page 7</p>
-                      <h2>Explorer certificate</h2>
-                      <p>{name} practised noticing feelings with {animalGuide.name} in {worldTheme.name}.</p>
-                      <div className="certificateBox">I tried something brave today.</div>
-                    </article>
+                    {isStarry ? (
+                      <>
+                        <article className="workbookPage templateImagePage"><img className="templatePageAsset" src={starryAssets.bodyMapTemplate} alt="Starry Camp body feelings map" /><div className="templateTextOverlay templateInstruction">Colour, circle, or gently mark the places your body notices feelings.</div></article>
+                        <article className="workbookPage templateImagePage"><img className="templatePageAsset" src={starryAssets.missionPathTemplate} alt="Starry Camp mission path" /><div className="templateTextOverlay missionLabel missionNotice">Notice</div><div className="templateTextOverlay missionLabel missionName">Name it</div><div className="templateTextOverlay missionLabel missionSupport">Choose support</div><div className="templateTextOverlay missionLabel missionAgain">Try again</div><div className="templateTextOverlay missionGoalOverlay">Tiny goal: {goal}</div></article>
+                        <article className="workbookPage templateImagePage"><img className="templatePageAsset" src={starryAssets.grownupSupportTemplate} alt="Starry Camp grown-up support" /><div className="templateTextOverlay supportIntroOverlay">When big feelings show up, the grown-up does not need to fix everything at once. Small, steady support can help the next step feel possible.</div><div className="templateTextOverlay supportCardOverlay supportPause"><strong>Pause</strong><br />Lower your voice.</div><div className="templateTextOverlay supportCardOverlay supportConnect"><strong>Connect</strong><br />Name the feeling.</div><div className="templateTextOverlay supportCardOverlay supportNext"><strong>Next</strong><br />Offer one small step.</div><div className="templateTextOverlay supportScriptOverlay">“{copy.parentLine}”</div></article>
+                        <article className="workbookPage templateImagePage"><img className="templatePageAsset" src={starryAssets.certificateTemplate} alt="Starry Camp certificate" /><div className="templateTextOverlay certificateTitleOverlay">Starry Camp Bravery Certificate</div><div className="templateTextOverlay certificateChildOverlay">{name}</div><div className="templateTextOverlay certificateSentenceOverlay">I tried something brave today.</div></article>
+                      </>
+                    ) : (
+                      <>
+                        <article className="workbookPage activityPage quietPage"><p className="eyebrow">Body map · Page 4</p><h2>Where do I feel it?</h2><p>Sometimes {focus.toLowerCase()} can show up as {copy.bodyClue}. Circle or colour the places your body gives you clues.</p><div className="bodyMapReal"><div className="head" /><div className="body" /><div className="arm left" /><div className="arm right" /><div className="leg left" /><div className="leg right" /></div></article>
+                        <article className="workbookPage activityPage quietPage"><p className="eyebrow">Mission path · Page 5</p><h2>My tiny mission</h2><p>{copy.mission}</p><div className="pathActivity"><span>Notice</span><span>Name it</span><span>Choose support</span><span>Try again</span></div><div className="goalCard"><span>Tiny goal</span><strong>{goal}</strong></div></article>
+                        <article className="workbookPage grownupPage quietPage"><p className="eyebrow">Grown-up support · Page 6</p><h2>Support script</h2><div className="scriptCard">“{copy.parentLine}”</div><div className="supportGrid"><div><strong>Pause</strong><span>Lower your voice.</span></div><div><strong>Connect</strong><span>Name the feeling.</span></div><div><strong>Next</strong><span>Offer one small step.</span></div></div></article>
+                        <article className="workbookPage reflectionPage quietPage"><p className="eyebrow">Reflection · Page 7</p><h2>Explorer certificate</h2><p>{name} practised noticing feelings with {animalGuide.name} in {worldTheme.name}.</p><div className="certificateBox">I tried something brave today.</div></article>
+                      </>
+                    )}
                   </>
                 )}
               </div>
