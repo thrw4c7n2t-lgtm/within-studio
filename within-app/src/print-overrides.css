@@ -1,0 +1,14 @@
+@media print {
+  .printPage:last-child {
+    break-after: auto !important;
+    page-break-after: auto !important;
+  }
+
+  .bookPreview::after,
+  .creator::after,
+  .main::after,
+  .app::after {
+    content: none !important;
+    display: none !important;
+  }
+}
