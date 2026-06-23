@@ -1,193 +1,158 @@
-import { FormEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { FormEvent, useMemo, useState } from 'react';
 
-type View = 'website' | 'studio';
-type FocusKey = 'Big feelings' | 'Anxiety' | 'Transitions' | 'Friendship' | 'Sensory regulation' | 'Confidence';
-
-type BookForm = {
-  childName: string;
-  focus: FocusKey;
-  animal: string;
-  setting: string;
-  strength: string;
+type WaitlistForm = {
+  name: string;
+  email: string;
+  support: string;
+  message: string;
 };
 
-type FocusContent = {
-  title: string;
-  metaphor: string;
-  mission: string;
-  bodyClue: string;
-  parentScript: string;
-  activity: string;
-};
-
-const focusOptions: FocusKey[] = [
-  'Big feelings',
-  'Anxiety',
-  'Transitions',
-  'Friendship',
-  'Sensory regulation',
-  'Confidence',
-];
-
-const focusContent: Record<FocusKey, FocusContent> = {
-  'Big feelings': {
-    title: 'The Weather Inside',
-    metaphor: 'Feelings move like weather: sometimes soft, sometimes stormy, and always allowed to pass through.',
-    mission: 'Name the feeling, find where it lives in the body, and choose one safe way to let it move.',
-    bodyClue: 'tight hands, hot cheeks, a buzzing chest or a heavy tummy',
-    parentScript: 'I can see your feeling is really big. I am not scared of it, and I will help you ride the wave.',
-    activity: 'Draw your feeling as weather. Add one thing that helps the weather soften.',
-  },
-  Anxiety: {
-    title: 'The Watchful Wombat',
-    metaphor: 'Anxiety is a watchful guard trying to keep the body safe, even when the danger is not as big as it feels.',
-    mission: 'Thank the guard, check the facts, and take one brave tiny step.',
-    bodyClue: 'a fast heart, butterflies, asking the same question again or wanting to stay close',
-    parentScript: 'Your worry is trying to protect you. We can listen to it without letting it be the boss.',
-    activity: 'Make a worry ladder with three tiny brave steps from easiest to hardest.',
-  },
-  Transitions: {
-    title: 'The Bridge Between Places',
-    metaphor: 'Transitions are bridges. Some bridges feel wobbly until we know what is on the other side.',
-    mission: 'See what is changing, what is staying the same, and what happens first, next and last.',
-    bodyClue: 'stalling, arguing, running away, asking for more time or suddenly becoming silly',
-    parentScript: 'This is a change moment. I will show you the next three steps and stay calm while your body catches up.',
-    activity: 'Draw a bridge from now to next. Add three stepping stones: first, next, last.',
-  },
-  Friendship: {
-    title: 'The Campfire Circle',
-    metaphor: 'Friendship is like a campfire circle: everyone needs space, warmth, turns and kindness.',
-    mission: 'Notice the other person, listen for a clue, and try one flexible play idea.',
-    bodyClue: 'talking over others, taking control, feeling left out or not knowing how to join',
-    parentScript: 'Friendship is a skill we practise. Let’s slow the moment down and look for one clue from the other person.',
-    activity: 'Create three join-in lines: Can I play? What are you building? Could I have a turn after you?',
-  },
-  'Sensory regulation': {
-    title: 'The Sensory Compass',
-    metaphor: 'The body has a compass that points toward what it needs: movement, pressure, quiet, chewing, warmth or space.',
-    mission: 'Notice the signal, choose a body tool, and check if the signal changes.',
-    bodyClue: 'wiggling, crashing, chewing, covering ears, hiding, humming or needing firm pressure',
-    parentScript: 'Your body is asking for help. Let’s choose a tool before we ask it to do something hard.',
-    activity: 'Make a sensory menu with three movement tools, three quiet tools and three pressure tools.',
-  },
-  Confidence: {
-    title: 'The Brave Seed',
-    metaphor: 'Confidence grows like a seed: it needs tiny tries, safe support and time underground before it blooms.',
-    mission: 'Remember one past success, choose one small try, and celebrate effort rather than perfect results.',
-    bodyClue: 'saying I cannot, hiding work, giving up quickly or needing lots of reassurance',
-    parentScript: 'You do not have to feel ready to begin. We can start tiny, and I will notice your effort.',
-    activity: 'Draw a brave seed. Write one thing it has already survived and one tiny thing it will try next.',
-  },
-};
-
-const defaultForm: BookForm = {
-  childName: 'Arthur',
-  focus: 'Big feelings',
-  animal: 'frog',
-  setting: 'a mossy rainforest creek',
-  strength: 'noticing small details',
-};
-
-const serviceCards = [
+const services = [
   {
     title: 'Counselling for women',
-    text: 'Warm support for anxiety, overwhelm, identity, boundaries, emotional load, burnout and life transitions.',
-    tag: 'Gentle + practical',
+    tag: 'Warm, grounded support',
+    text: 'Support for anxiety, overwhelm, burnout, identity shifts, boundaries, emotional labour and the invisible load of holding everything together.',
   },
   {
     title: 'Parenting support',
-    text: 'Neuroaffirming guidance for families navigating big feelings, school stress, behaviour, connection and repair.',
-    tag: 'Parent-safe support',
+    tag: 'Connection before correction',
+    text: 'Parent consults for big feelings, repair, routines, school stress, sensory overwhelm, behaviour concerns and family nervous-system patterns.',
   },
   {
     title: 'Neurodivergent families',
-    text: 'ADHD and autism-affirming sessions that reduce shame and build practical tools around nervous-system needs.',
-    tag: 'ND affirming',
+    tag: 'ADHD + autism affirming',
+    text: 'Practical, shame-free support for neurodivergent parents, children and families who need tools that match real brains and real homes.',
   },
   {
-    title: 'Resources + advocacy',
-    text: 'Printable scripts, school meeting prep, parent resources and child-friendly emotional literacy tools.',
-    tag: 'Tools you can use',
+    title: 'School advocacy support',
+    tag: 'Clearer language, calmer meetings',
+    text: 'Preparation for school conversations, reasonable adjustment requests, parent scripts, meeting notes and child-centred support planning.',
   },
 ];
 
-const approachCards = [
-  'Trauma-informed and paced gently',
+const pathways = [
+  {
+    step: '01',
+    title: 'Arrive gently',
+    text: 'We start with what is feeling heavy, urgent or confusing. You do not need to arrive organised, articulate or already coping.',
+  },
+  {
+    step: '02',
+    title: 'Make sense of the pattern',
+    text: 'Together we look underneath the surface: nervous-system needs, sensory load, family history, expectations, stress and protective strategies.',
+  },
+  {
+    step: '03',
+    title: 'Build realistic tools',
+    text: 'You leave with language, scripts, visual tools, tiny next steps and support ideas that can actually work in a busy family system.',
+  },
+];
+
+const values = [
   'Neuroaffirming, not behaviourist',
+  'Trauma-informed and paced gently',
   'Practical tools without shame',
-  'Warm, human and collaborative',
-  'Designed for busy, overloaded parents',
-  'Accessible, visual and ADHD-friendly',
+  'Warm, direct and human',
+  'ADHD-friendly structure',
+  'Parent-safe and child-centred',
 ];
 
-const resourceCards = [
-  {
-    title: 'ADHD-friendly home rhythm',
-    text: 'A simple visual routine page for mornings, afternoons and bedtime without turning the house into a battleground.',
-  },
-  {
-    title: 'School meeting prep sheet',
-    text: 'A calm one-page planner for concerns, strengths, requested adjustments and follow-up notes.',
-  },
+const resources = [
   {
     title: 'Big feelings script card',
-    text: 'A parent co-regulation prompt for when children are overwhelmed and adults need words quickly.',
+    text: 'A quick parent prompt for co-regulation moments when everyone is activated and words are hard to find.',
   },
+  {
+    title: 'School meeting preparation page',
+    text: 'A simple planner for strengths, concerns, adjustment requests, examples and next steps.',
+  },
+  {
+    title: 'ADHD-friendly family rhythm',
+    text: 'A visual routine framework designed around energy, transitions and nervous-system load rather than perfection.',
+  },
+];
+
+const audienceCards = [
+  'Women who feel overloaded, stretched thin or disconnected from themselves',
+  'Parents trying to support children with big feelings, anxiety, ADHD or autism',
+  'Families who want practical tools without shame, blame or clinical coldness',
+  'Neurodivergent adults who need therapy to feel accessible, warm and useful',
 ];
 
 const faqs = [
   {
     question: 'Is Within open for bookings yet?',
-    answer: 'The site is set up as a pre-opening website. The waitlist section can capture interest now, then connect to a booking platform later.',
+    answer: 'Within is currently being prepared as a pre-opening counselling practice website. The waitlist form is functional as a front-end prototype and can be connected to email, Tally, Google Forms or a secure booking platform next.',
   },
   {
-    question: 'Who is Within for?',
-    answer: 'Within is being shaped for women, parents and families who want warm, neuroaffirming, practical counselling support.',
+    question: 'What kind of therapy style is this?',
+    answer: 'The brand direction is warm, trauma-informed, neuroaffirming and practical. The website avoids clinical or shaming language and centres nervous-system understanding, parenting support, emotional safety and real-life tools.',
   },
   {
-    question: 'Will sessions be online or in person?',
-    answer: 'The current website copy leaves room for telehealth, parent consults, resources and future local services as the practice model is finalised.',
+    question: 'Can this site connect to bookings?',
+    answer: 'Yes. The current booking buttons are ready placeholders. The next technical step is choosing a booking system such as Halaxy, Power Diary, Cliniko, Zanda or a simple enquiry form workflow.',
   },
 ];
 
-function getInitialView(): View {
-  return window.location.pathname.startsWith('/studio') ? 'studio' : 'website';
-}
+const defaultForm: WaitlistForm = {
+  name: '',
+  email: '',
+  support: '',
+  message: '',
+};
 
 function App() {
-  const [view, setView] = useState<View>(getInitialView);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [form, setForm] = useState<WaitlistForm>(defaultForm);
+  const [status, setStatus] = useState('');
+  const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    const handlePopState = () => setView(getInitialView());
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  const enquiryText = useMemo(() => {
+    return [
+      'New Within waitlist enquiry',
+      `Name: ${form.name || 'Not provided'}`,
+      `Email: ${form.email || 'Not provided'}`,
+      `Support interest: ${form.support || 'Not selected'}`,
+      `Message: ${form.message || 'No message provided'}`,
+    ].join('\n');
+  }, [form]);
 
-  const navigate = (nextView: View) => {
-    const nextPath = nextView === 'studio' ? '/studio' : '/';
-    window.history.pushState({}, '', nextPath);
-    setView(nextView);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const mailtoHref = useMemo(() => {
+    const subject = encodeURIComponent('Within waitlist enquiry');
+    const body = encodeURIComponent(enquiryText);
+    return `mailto:hello@withinmind.com.au?subject=${subject}&body=${body}`;
+  }, [enquiryText]);
+
+  const updateForm = <K extends keyof WaitlistForm>(key: K, value: WaitlistForm[K]) => {
+    setForm((current) => ({ ...current, [key]: value }));
+    setStatus('');
+    setCopied(false);
   };
 
-  return view === 'studio' ? <BookStudio onNavigateHome={() => navigate('website')} /> : <WithinWebsite onOpenStudio={() => navigate('studio')} />;
-}
-
-function WithinWebsite({ onOpenStudio }: { onOpenStudio: () => void }) {
-  const [waitlistMessage, setWaitlistMessage] = useState('');
-
-  const handleWaitlist = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setWaitlistMessage('Thank you — this front-end waitlist is ready. The next build step is connecting it to email, Tally, Google Forms or a database.');
-    event.currentTarget.reset();
+    const existing = JSON.parse(localStorage.getItem('within-waitlist') || '[]') as WaitlistForm[];
+    localStorage.setItem('within-waitlist', JSON.stringify([...existing, form]));
+    setStatus('Saved in this browser. Use the email button below to send this enquiry to your inbox once your email is active.');
+  };
+
+  const copyEnquiry = async () => {
+    try {
+      await navigator.clipboard.writeText(enquiryText);
+      setCopied(true);
+      setStatus('Copied enquiry text. You can paste it into email, notes or your practice setup file.');
+    } catch {
+      setStatus('Copy did not work in this browser. You can still use the email button.');
+    }
   };
 
   return (
     <main className="within-site">
       <section className="site-hero" id="top">
-        <WebsiteNav onOpenStudio={onOpenStudio} />
+        <Navigation menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <div className="hero-bloom bloom-one" />
         <div className="hero-bloom bloom-two" />
+        <div className="hero-bloom bloom-three" />
 
         <div className="site-hero-grid">
           <div className="site-hero-copy">
@@ -233,13 +198,28 @@ function WithinWebsite({ onOpenStudio }: { onOpenStudio: () => void }) {
         </p>
       </section>
 
+      <section className="audience-section">
+        <div className="section-heading compact-heading">
+          <p className="eyebrow">Who it is for</p>
+          <h2>For people who need therapy to feel more human.</h2>
+        </div>
+        <div className="audience-grid">
+          {audienceCards.map((card) => (
+            <article className="audience-card" key={card}>
+              <span>✦</span>
+              <p>{card}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="section-wrap" id="services">
         <div className="section-heading">
           <p className="eyebrow">Support areas</p>
           <h2>Counselling and practical resources with a soft landing.</h2>
         </div>
         <div className="service-grid">
-          {serviceCards.map((card) => (
+          {services.map((card) => (
             <article className="service-card" key={card.title}>
               <span>{card.tag}</span>
               <h3>{card.title}</h3>
@@ -249,7 +229,7 @@ function WithinWebsite({ onOpenStudio }: { onOpenStudio: () => void }) {
         </div>
       </section>
 
-      <section className="feature-section">
+      <section className="feature-section" id="approach">
         <div className="feature-card large-feature">
           <p className="eyebrow">The Within approach</p>
           <h2>Less fixing. More understanding, tools and repair.</h2>
@@ -259,11 +239,27 @@ function WithinWebsite({ onOpenStudio }: { onOpenStudio: () => void }) {
           </p>
         </div>
         <div className="approach-list">
-          {approachCards.map((item) => (
+          {values.map((item) => (
             <div className="approach-pill" key={item}>
               <span>✦</span>
               <p>{item}</p>
             </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="pathway-section">
+        <div className="section-heading compact-heading">
+          <p className="eyebrow">How support works</p>
+          <h2>A clear, calm pathway.</h2>
+        </div>
+        <div className="pathway-grid">
+          {pathways.map((pathway) => (
+            <article className="pathway-card" key={pathway.step}>
+              <span>{pathway.step}</span>
+              <h3>{pathway.title}</h3>
+              <p>{pathway.text}</p>
+            </article>
           ))}
         </div>
       </section>
@@ -274,10 +270,10 @@ function WithinWebsite({ onOpenStudio }: { onOpenStudio: () => void }) {
             <p className="eyebrow">Resources</p>
             <h2>Printable tools are part of the ecosystem.</h2>
           </div>
-          <button className="secondary-action" type="button" onClick={onOpenStudio}>Open Studio</button>
+          <a className="secondary-action" href="#waitlist">Request resources</a>
         </div>
         <div className="resource-preview-grid">
-          {resourceCards.map((resource) => (
+          {resources.map((resource) => (
             <article className="resource-card" key={resource.title}>
               <div className="paper-edge" />
               <h3>{resource.title}</h3>
@@ -287,27 +283,70 @@ function WithinWebsite({ onOpenStudio }: { onOpenStudio: () => void }) {
         </div>
       </section>
 
+      <section className="booking-section" id="booking">
+        <div className="booking-card">
+          <p className="eyebrow">Booking-ready section</p>
+          <h2>Ready for a booking system when you are.</h2>
+          <p>
+            This section is designed to connect to your future booking platform. For now, it points people toward the
+            waitlist so the site can start collecting interest before launch.
+          </p>
+          <div className="hero-actions">
+            <a className="primary-action" href="#waitlist">Join the waitlist</a>
+            <a className="secondary-action" href="mailto:hello@withinmind.com.au?subject=Within%20enquiry">Email Within</a>
+          </div>
+        </div>
+        <div className="availability-card">
+          <span>Pre-launch</span>
+          <h3>Planned service options</h3>
+          <ul>
+            <li>Individual counselling</li>
+            <li>Parent consults</li>
+            <li>Telehealth options</li>
+            <li>School support planning</li>
+          </ul>
+        </div>
+      </section>
+
       <section className="waitlist-section" id="waitlist">
         <div className="waitlist-copy">
           <p className="eyebrow">Pre-opening waitlist</p>
           <h2>Register interest in Within.</h2>
           <p>
-            This form is currently front-end only. It is ready for the next step: connecting submissions to your preferred
-            system once your email, booking and privacy workflow are chosen.
+            This prototype saves entries in your browser and creates a ready-to-send email. Do not collect clinical,
+            crisis or highly sensitive information here until the final privacy and storage workflow is set up.
           </p>
         </div>
-        <form className="waitlist-form" onSubmit={handleWaitlist}>
+        <form className="waitlist-form" onSubmit={handleSubmit}>
           <label>
             Name
-            <input name="name" placeholder="Your name" required />
+            <input
+              name="name"
+              value={form.name}
+              onChange={(event) => updateForm('name', event.target.value)}
+              placeholder="Your name"
+              required
+            />
           </label>
           <label>
             Email
-            <input name="email" type="email" placeholder="you@example.com" required />
+            <input
+              name="email"
+              value={form.email}
+              onChange={(event) => updateForm('email', event.target.value)}
+              type="email"
+              placeholder="you@example.com"
+              required
+            />
           </label>
           <label>
             What kind of support are you interested in?
-            <select name="support" defaultValue="">
+            <select
+              name="support"
+              value={form.support}
+              onChange={(event) => updateForm('support', event.target.value)}
+              required
+            >
               <option value="" disabled>Select one</option>
               <option>Individual counselling</option>
               <option>Parent support</option>
@@ -315,8 +354,22 @@ function WithinWebsite({ onOpenStudio }: { onOpenStudio: () => void }) {
               <option>School advocacy / adjustment planning</option>
             </select>
           </label>
-          <button className="primary-action" type="submit">Join waitlist</button>
-          {waitlistMessage && <p className="status-message">{waitlistMessage}</p>}
+          <label>
+            Optional note
+            <textarea
+              name="message"
+              value={form.message}
+              onChange={(event) => updateForm('message', event.target.value)}
+              placeholder="A short, non-urgent note. Please do not include crisis or highly sensitive information yet."
+              rows={4}
+            />
+          </label>
+          <button className="primary-action" type="submit">Save enquiry</button>
+          <div className="form-actions compact-actions">
+            <a className="secondary-action" href={mailtoHref}>Open email draft</a>
+            <button className="secondary-action" type="button" onClick={copyEnquiry}>{copied ? 'Copied' : 'Copy enquiry'}</button>
+          </div>
+          {status && <p className="status-message">{status}</p>}
         </form>
       </section>
 
@@ -339,192 +392,46 @@ function WithinWebsite({ onOpenStudio }: { onOpenStudio: () => void }) {
         <div>
           <h2>Within</h2>
           <p>Neuroaffirming therapy for women, parents & families.</p>
+          <small>Pre-launch website prototype. Final policies, booking workflow and privacy notices still need to be connected.</small>
         </div>
         <div className="footer-links">
           <a href="#top">Top</a>
           <a href="#services">Services</a>
           <a href="#waitlist">Waitlist</a>
-          <button type="button" onClick={onOpenStudio}>Studio</button>
+          <a href="mailto:hello@withinmind.com.au">Email</a>
         </div>
       </footer>
     </main>
   );
 }
 
-function WebsiteNav({ onOpenStudio }: { onOpenStudio: () => void }) {
+function Navigation({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: (open: boolean) => void }) {
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <nav className="website-nav" aria-label="Within website navigation">
-      <a className="website-brand" href="#top" aria-label="Within home">
+      <a className="website-brand" href="#top" aria-label="Within home" onClick={closeMenu}>
         <span>✺</span>
         Within
       </a>
-      <div className="website-links">
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#resources">Resources</a>
-        <a href="#waitlist">Waitlist</a>
-        <button type="button" onClick={onOpenStudio}>Studio</button>
+      <button
+        className="menu-toggle"
+        type="button"
+        aria-expanded={menuOpen}
+        aria-controls="site-menu"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        Menu
+      </button>
+      <div className={`website-links ${menuOpen ? 'open' : ''}`} id="site-menu">
+        <a href="#about" onClick={closeMenu}>About</a>
+        <a href="#services" onClick={closeMenu}>Services</a>
+        <a href="#approach" onClick={closeMenu}>Approach</a>
+        <a href="#resources" onClick={closeMenu}>Resources</a>
+        <a href="#booking" onClick={closeMenu}>Booking</a>
+        <a href="#waitlist" onClick={closeMenu}>Waitlist</a>
       </div>
     </nav>
-  );
-}
-
-function BookStudio({ onNavigateHome }: { onNavigateHome: () => void }) {
-  const [form, setForm] = useState<BookForm>(defaultForm);
-  const [copied, setCopied] = useState(false);
-  const builderRef = useRef<HTMLElement | null>(null);
-
-  const focus = focusContent[form.focus];
-  const child = form.childName.trim() || 'Your child';
-  const animal = form.animal.trim() || 'butterfly';
-  const setting = form.setting.trim() || 'a quiet garden path';
-  const strength = form.strength.trim() || 'trying again';
-
-  const generatedText = useMemo(() => {
-    return `${child}'s Explorer Journal\n\n${focus.title}\nA child-friendly therapeutic story about ${form.focus.toLowerCase()}.\n\nStory beginning:\nToday, ${child} stepped into ${setting} and met a wise little ${animal}. The ${animal} explained: "${focus.metaphor}"\n\nBody clue:\nSometimes ${form.focus.toLowerCase()} can show up as ${focus.bodyClue}.\n\nExplorer mission:\n${focus.mission}\n\nActivity page:\n${focus.activity}\n\nParent support line:\n${focus.parentScript}\n\nStrength reminder:\n${child}'s explorer strength is ${strength}. Tiny steps count.`;
-  }, [animal, child, focus, form.focus, setting, strength]);
-
-  const updateForm = <K extends keyof BookForm>(key: K, value: BookForm[K]) => {
-    setForm((current) => ({ ...current, [key]: value }));
-    setCopied(false);
-  };
-
-  const copyOutput = async () => {
-    try {
-      await navigator.clipboard.writeText(generatedText);
-      setCopied(true);
-    } catch {
-      setCopied(false);
-    }
-  };
-
-  return (
-    <main className="studio-shell">
-      <section className="studio-hero no-print">
-        <nav className="top-nav" aria-label="Within Studio navigation">
-          <button className="brand-mark" type="button" onClick={onNavigateHome}>← Within website</button>
-          <div className="nav-links">
-            <button type="button" onClick={() => builderRef.current?.scrollIntoView({ behavior: 'smooth' })}>Book Creator</button>
-            <button type="button" onClick={() => window.print()}>Print</button>
-          </div>
-        </nav>
-        <div className="studio-hero-copy">
-          <p className="eyebrow">Within Studio</p>
-          <h1>Create therapeutic books, activities and family resources.</h1>
-          <p>
-            This area keeps the earlier book creation platform available while the main Within website is built at the homepage.
-          </p>
-        </div>
-      </section>
-
-      <section className="builder-section" ref={builderRef}>
-        <div className="builder-header no-print">
-          <p className="eyebrow">Book Creator</p>
-          <h2>Create an Explorer Book</h2>
-          <p>Generate polished draft content for a printable child-friendly support book.</p>
-        </div>
-
-        <div className="builder-grid">
-          <form className="builder-form no-print" onSubmit={(event) => event.preventDefault()}>
-            <label>
-              Child’s name
-              <input
-                value={form.childName}
-                onChange={(event) => updateForm('childName', event.target.value)}
-                placeholder="e.g. Arthur"
-              />
-            </label>
-
-            <label>
-              Therapy focus
-              <select
-                value={form.focus}
-                onChange={(event) => updateForm('focus', event.target.value as FocusKey)}
-              >
-                {focusOptions.map((option) => (
-                  <option key={option}>{option}</option>
-                ))}
-              </select>
-            </label>
-
-            <label>
-              Favourite animal or guide
-              <input
-                value={form.animal}
-                onChange={(event) => updateForm('animal', event.target.value)}
-                placeholder="e.g. frog, koala, butterfly"
-              />
-            </label>
-
-            <label>
-              Story setting
-              <input
-                value={form.setting}
-                onChange={(event) => updateForm('setting', event.target.value)}
-                placeholder="e.g. rainforest creek"
-              />
-            </label>
-
-            <label>
-              Child strength to weave in
-              <input
-                value={form.strength}
-                onChange={(event) => updateForm('strength', event.target.value)}
-                placeholder="e.g. curiosity, humour, bravery"
-              />
-            </label>
-
-            <div className="form-actions">
-              <button className="primary-action" type="button" onClick={copyOutput}>
-                {copied ? 'Copied' : 'Copy Text'}
-              </button>
-              <button className="secondary-action" type="button" onClick={() => window.print()}>
-                Print Resource
-              </button>
-            </div>
-          </form>
-
-          <article className="resource-preview" aria-live="polite">
-            <div className="page cover-page">
-              <p className="small-label">Explorer Journal</p>
-              <h2>{child}’s {focus.title}</h2>
-              <p>A gentle adventure about {form.focus.toLowerCase()} with a wise little {animal}.</p>
-            </div>
-
-            <div className="page">
-              <h3>Story Beginning</h3>
-              <p>
-                Today, {child} stepped into {setting} and met a wise little {animal}. The {animal} whispered,
-                “{focus.metaphor}”
-              </p>
-            </div>
-
-            <div className="page split-page">
-              <div>
-                <h3>Body Clue</h3>
-                <p>{form.focus} can show up as {focus.bodyClue}.</p>
-              </div>
-              <div>
-                <h3>Mission</h3>
-                <p>{focus.mission}</p>
-              </div>
-            </div>
-
-            <div className="page">
-              <h3>Activity</h3>
-              <p>{focus.activity}</p>
-              <div className="drawing-box">Draw or write here</div>
-            </div>
-
-            <div className="page parent-page">
-              <h3>Parent Support Line</h3>
-              <p>“{focus.parentScript}”</p>
-              <p className="strength-line">Strength woven in: {strength}.</p>
-            </div>
-          </article>
-        </div>
-      </section>
-    </main>
   );
 }
 
