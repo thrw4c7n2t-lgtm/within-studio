@@ -1,0 +1,231 @@
+.frontCoverPage {
+  align-items: stretch;
+  justify-content: flex-start;
+  text-align: center;
+}
+
+.frontCoverPage.theme-rainforest {
+  background:
+    radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.78), transparent 13rem),
+    radial-gradient(circle at 84% 18%, rgba(119, 166, 118, 0.36), transparent 15rem),
+    linear-gradient(145deg, #f9efd9 0%, #d8e8c8 45%, #97c9bf 100%) !important;
+}
+
+.frontCoverPage.theme-rockpool {
+  background:
+    radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.82), transparent 13rem),
+    radial-gradient(circle at 84% 18%, rgba(94, 190, 211, 0.38), transparent 15rem),
+    linear-gradient(145deg, #fff0d9 0%, #b9edf0 48%, #7dbed5 100%) !important;
+}
+
+.frontCoverPage.theme-burrow {
+  background:
+    radial-gradient(circle at 16% 15%, rgba(255, 250, 242, 0.9), transparent 13rem),
+    radial-gradient(circle at 86% 18%, rgba(230, 170, 89, 0.36), transparent 15rem),
+    linear-gradient(145deg, #fff1d6 0%, #e6c39b 48%, #b8895e 100%) !important;
+}
+
+.frontCoverPage.theme-garden {
+  background:
+    radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.82), transparent 13rem),
+    radial-gradient(circle at 84% 18%, rgba(238, 141, 184, 0.34), transparent 15rem),
+    linear-gradient(145deg, #fff1c8 0%, #ffd9e8 48%, #b9d99a 100%) !important;
+}
+
+.frontCoverPage.theme-stars {
+  background:
+    radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.78), transparent 12rem),
+    radial-gradient(circle at 80% 12%, rgba(255, 235, 155, 0.35), transparent 12rem),
+    linear-gradient(145deg, #f5e9ff 0%, #9ca0e4 50%, #3d5d88 100%) !important;
+}
+
+.frontCoverPage.theme-mountain {
+  background:
+    radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.8), transparent 13rem),
+    radial-gradient(circle at 84% 18%, rgba(255, 170, 120, 0.32), transparent 15rem),
+    linear-gradient(145deg, #f6f4dc 0%, #b7d9e9 48%, #92b58c 100%) !important;
+}
+
+.frontCoverPage .printHeader {
+  margin-bottom: 16px;
+}
+
+.frontCoverTitle {
+  font-size: clamp(46px, 7vw, 86px) !important;
+  line-height: 0.9 !important;
+  margin: 0 auto 12px !important;
+  max-width: 820px !important;
+  text-shadow: 0 14px 36px rgba(38, 59, 50, 0.12);
+}
+
+.frontCoverSubtitle {
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(38, 59, 50, 0.12);
+  border-radius: 999px;
+  color: #4d5e54 !important;
+  display: inline-flex;
+  font-size: 18px !important;
+  margin: 0 auto 18px !important;
+  padding: 10px 18px;
+}
+
+.frontCoverScene {
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 22px 70px rgba(38, 59, 50, 0.16), inset 0 -30px 55px rgba(38, 59, 50, 0.06);
+  min-height: 260px !important;
+  order: 4;
+}
+
+.frontCoverScene .sceneStickerStrip span {
+  font-size: clamp(56px, 8vw, 88px);
+}
+
+.frontCoverScene .sceneStickerStrip span:nth-child(2) {
+  font-size: clamp(105px, 13vw, 150px);
+}
+
+.frontCoverHiddenText {
+  display: none !important;
+}
+
+.frontCoverFeatures {
+  display: grid !important;
+  gap: 14px !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  margin-top: 20px !important;
+  order: 5;
+}
+
+.coverFeatureCard {
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(38, 59, 50, 0.12);
+  border-radius: 22px;
+  padding: 16px 12px;
+}
+
+.coverFeatureCard span {
+  color: #617166;
+  display: block;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.coverFeatureCard strong {
+  color: #24382f;
+  display: block;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+.coverNamePlate {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.76);
+  border: 2px dashed rgba(38, 59, 50, 0.26);
+  border-radius: 24px;
+  color: #24382f;
+  display: grid;
+  justify-content: center;
+  margin-top: 18px;
+  min-height: 86px;
+  padding: 14px;
+  text-align: center;
+}
+
+.coverNamePlate span {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.coverNamePlate strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  letter-spacing: 0.02em;
+}
+
+.frontCoverPage.style-colouring,
+.frontCoverPage.style-lowInk {
+  background: #fffef9 !important;
+}
+
+.frontCoverPage.style-colouring .frontCoverSubtitle,
+.frontCoverPage.style-colouring .coverFeatureCard,
+.frontCoverPage.style-colouring .coverNamePlate,
+.frontCoverPage.style-colouring .frontCoverScene {
+  background: #ffffff !important;
+  border-color: #17201b !important;
+  box-shadow: none !important;
+}
+
+@media print {
+  .frontCoverPage {
+    padding: 13mm 15mm !important;
+  }
+
+  .frontCoverPage .printHeader {
+    margin-bottom: 5mm;
+  }
+
+  .frontCoverTitle {
+    font-size: 42px !important;
+    margin-bottom: 3mm !important;
+  }
+
+  .frontCoverSubtitle {
+    font-size: 12px !important;
+    margin-bottom: 4mm !important;
+    padding: 2mm 4mm;
+  }
+
+  .frontCoverScene {
+    min-height: 68mm !important;
+    margin-bottom: 4mm !important;
+  }
+
+  .frontCoverScene .sceneStickerStrip span {
+    font-size: 36px !important;
+  }
+
+  .frontCoverScene .sceneStickerStrip span:nth-child(2) {
+    font-size: 70px !important;
+  }
+
+  .frontCoverFeatures {
+    gap: 3mm !important;
+    margin-top: 0 !important;
+  }
+
+  .coverFeatureCard {
+    border-radius: 14px;
+    padding: 3mm 2mm;
+  }
+
+  .coverFeatureCard span {
+    font-size: 8px;
+    margin-bottom: 1.5mm;
+  }
+
+  .coverFeatureCard strong {
+    font-size: 13px;
+  }
+
+  .coverNamePlate {
+    border-radius: 14px;
+    margin-top: 4mm;
+    min-height: 18mm;
+    padding: 2mm;
+  }
+
+  .coverNamePlate span {
+    font-size: 8px;
+  }
+
+  .coverNamePlate strong {
+    font-size: 16px;
+  }
+}
