@@ -1,0 +1,45 @@
+.frontCoverPage {
+  min-height: 297mm;
+}
+
+.frontCoverPage .printHeader {
+  order: 1;
+}
+
+.frontCoverTitle {
+  order: 2;
+}
+
+.frontCoverSubtitle {
+  order: 3;
+}
+
+.frontCoverScene {
+  order: 4;
+}
+
+.frontCoverFeatures {
+  order: 5;
+}
+
+.coverNamePlate {
+  order: 6;
+}
+
+.frontCoverPage .coverFeatureCard strong:not(:empty) {
+  color: #1f352c;
+}
+
+@media print {
+  .coverNamePlate {
+    order: 6;
+  }
+
+  .frontCoverFeatures {
+    order: 5;
+  }
+
+  .frontCoverScene {
+    order: 4;
+  }
+}
