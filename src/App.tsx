@@ -7,25 +7,36 @@ type WaitlistForm = {
   message: string;
 };
 
+type BrandImageProps = {
+  src: string;
+  alt: string;
+  className: string;
+  decorative?: boolean;
+};
+
 const services = [
   {
     title: 'Counselling for women',
     tag: 'Warm, grounded support',
+    image: '/assets/within-icon-women.png',
     text: 'Support for anxiety, overwhelm, burnout, identity shifts, boundaries, emotional labour and the invisible load of holding everything together.',
   },
   {
     title: 'Parenting support',
     tag: 'Connection before correction',
+    image: '/assets/within-icon-parenting.png',
     text: 'Parent consults for big feelings, repair, routines, school stress, sensory overwhelm, behaviour concerns and family nervous-system patterns.',
   },
   {
     title: 'Neurodivergent families',
     tag: 'ADHD + autism affirming',
+    image: '/assets/within-icon-neurodivergent.png',
     text: 'Practical, shame-free support for neurodivergent parents, children and families who need tools that match real brains and real homes.',
   },
   {
     title: 'School advocacy support',
     tag: 'Clearer language, calmer meetings',
+    image: '/assets/within-icon-advocacy.png',
     text: 'Preparation for school conversations, reasonable adjustment requests, parent scripts, meeting notes and child-centred support planning.',
   },
 ];
@@ -60,14 +71,17 @@ const values = [
 const resources = [
   {
     title: 'Big feelings script card',
+    image: '/assets/within-resource-big-feelings.png',
     text: 'A quick parent prompt for co-regulation moments when everyone is activated and words are hard to find.',
   },
   {
     title: 'School meeting preparation page',
+    image: '/assets/within-resource-school-meeting.png',
     text: 'A simple planner for strengths, concerns, adjustment requests, examples and next steps.',
   },
   {
     title: 'ADHD-friendly family rhythm',
+    image: '/assets/within-resource-family-rhythm.png',
     text: 'A visual routine framework designed around energy, transitions and nervous-system load rather than perfection.',
   },
 ];
@@ -100,6 +114,22 @@ const defaultForm: WaitlistForm = {
   support: '',
   message: '',
 };
+
+function BrandImage({ src, alt, className, decorative = false }: BrandImageProps) {
+  const [available, setAvailable] = useState(true);
+
+  if (!available) return null;
+
+  return (
+    <img
+      src={src}
+      alt={decorative ? '' : alt}
+      aria-hidden={decorative ? 'true' : undefined}
+      className={className}
+      onError={() => setAvailable(false)}
+    />
+  );
+}
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -175,8 +205,11 @@ function App() {
 
           <aside className="hero-portrait-card" aria-label="Within brand card">
             <div className="portrait-orb" />
-            <div className="line-art-face" aria-hidden="true">
-              <span />
+            <div className="hero-image-frame">
+              <BrandImage src="/assets/within-hero.png" alt="Within abstract botanical face artwork" className="hero-canva-image" />
+              <div className="line-art-face" aria-hidden="true">
+                <span />
+              </div>
             </div>
             <p className="small-label">A gentler way inward</p>
             <h2>Support that meets you where your nervous system actually is.</h2>
@@ -192,10 +225,13 @@ function App() {
           <p className="eyebrow">Why Within exists</p>
           <h2>Because support should feel safe, useful and un-shaming.</h2>
         </div>
-        <p>
-          Within is being built for people who are tired of being told to try harder when what they really need is
-          understanding, structure, nervous-system support and language that honours their lived experience.
-        </p>
+        <div>
+          <BrandImage src="/assets/within-section-divider.png" alt="Within botanical section artwork" className="section-canva-divider" decorative />
+          <p>
+            Within is being built for people who are tired of being told to try harder when what they really need is
+            understanding, structure, nervous-system support and language that honours their lived experience.
+          </p>
+        </div>
       </section>
 
       <section className="audience-section">
@@ -221,6 +257,7 @@ function App() {
         <div className="service-grid">
           {services.map((card) => (
             <article className="service-card" key={card.title}>
+              <BrandImage src={card.image} alt={`${card.title} icon`} className="service-canva-icon" />
               <span>{card.tag}</span>
               <h3>{card.title}</h3>
               <p>{card.text}</p>
@@ -231,6 +268,7 @@ function App() {
 
       <section className="feature-section" id="approach">
         <div className="feature-card large-feature">
+          <BrandImage src="/assets/within-approach-art.png" alt="Within therapeutic approach artwork" className="feature-canva-art" decorative />
           <p className="eyebrow">The Within approach</p>
           <h2>Less fixing. More understanding, tools and repair.</h2>
           <p>
@@ -276,6 +314,7 @@ function App() {
           {resources.map((resource) => (
             <article className="resource-card" key={resource.title}>
               <div className="paper-edge" />
+              <BrandImage src={resource.image} alt={`${resource.title} preview`} className="resource-canva-image" />
               <h3>{resource.title}</h3>
               <p>{resource.text}</p>
             </article>
@@ -285,6 +324,7 @@ function App() {
 
       <section className="booking-section" id="booking">
         <div className="booking-card">
+          <BrandImage src="/assets/within-logo-concept.png" alt="Within logo concept" className="booking-logo-watermark" decorative />
           <p className="eyebrow">Booking-ready section</p>
           <h2>Ready for a booking system when you are.</h2>
           <p>
@@ -390,7 +430,10 @@ function App() {
 
       <footer className="site-footer" id="contact">
         <div>
-          <h2>Within</h2>
+          <div className="footer-brand-row">
+            <BrandImage src="/assets/within-logo.png" alt="Within logo" className="footer-logo-image" />
+            <h2>Within</h2>
+          </div>
           <p>Neuroaffirming therapy for women, parents & families.</p>
           <small>Pre-launch website prototype. Final policies, booking workflow and privacy notices still need to be connected.</small>
         </div>
@@ -411,7 +454,10 @@ function Navigation({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen:
   return (
     <nav className="website-nav" aria-label="Within website navigation">
       <a className="website-brand" href="#top" aria-label="Within home" onClick={closeMenu}>
-        <span>✺</span>
+        <span className="brand-mark-shell">
+          <BrandImage src="/assets/within-logo-mark.png" alt="Within logo mark" className="nav-logo-image" />
+          <em aria-hidden="true">✺</em>
+        </span>
         Within
       </a>
       <button
