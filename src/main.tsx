@@ -4,6 +4,7 @@ import App from './App';
 import './App.css';
 import './polish.css';
 import './brand-assets.css';
+import './botanical.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

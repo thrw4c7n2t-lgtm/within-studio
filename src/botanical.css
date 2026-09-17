@@ -1,0 +1,301 @@
+/* Botanical continuation layer for Within.
+   Loads last so the nature treatment can evolve without disturbing the base layout. */
+
+:root {
+  --moss: #5f745f;
+  --fern: #70856d;
+  --leaf-shadow: rgba(42, 63, 49, 0.14);
+  --petal-wash: rgba(233, 209, 199, 0.26);
+}
+
+.within-site {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 8% 12%, rgba(115, 139, 109, 0.11), transparent 28rem),
+    radial-gradient(circle at 94% 28%, rgba(212, 191, 173, 0.16), transparent 30rem),
+    linear-gradient(180deg, #fbf5eb 0%, #f8f1e7 48%, #fbf6ef 100%);
+}
+
+.within-site::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  opacity: 0.18;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(62, 83, 67, 0.16) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 70% 58%, rgba(104, 121, 92, 0.12) 0 1px, transparent 1.5px);
+  background-size: 34px 34px, 46px 46px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,.5), transparent 80%);
+}
+
+.site-hero,
+.intro-band,
+.feature-section,
+.section-wrap,
+.audience-section,
+.pathway-section,
+.booking-section,
+.waitlist-section {
+  position: relative;
+}
+
+/* Eucalyptus-like branch silhouettes: subtle, edge-bound and deliberately kept away from copy. */
+.site-hero::before,
+.site-hero::after,
+.intro-band::before,
+.feature-section::before,
+.booking-section::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  width: 210px;
+  height: 330px;
+  opacity: 0.24;
+  filter: drop-shadow(0 18px 24px rgba(48, 65, 50, 0.08));
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 210 330' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%235b715d' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M111 318 C99 255 110 202 92 151 C82 119 76 80 85 18'/%3E%3C/g%3E%3Cg fill='%237a8f73' fill-opacity='.74'%3E%3Cellipse cx='72' cy='52' rx='18' ry='34' transform='rotate(-42 72 52)'/%3E%3Cellipse cx='106' cy='82' rx='17' ry='32' transform='rotate(37 106 82)'/%3E%3Cellipse cx='62' cy='116' rx='20' ry='36' transform='rotate(-54 62 116)'/%3E%3Cellipse cx='116' cy='145' rx='19' ry='35' transform='rotate(43 116 145)'/%3E%3Cellipse cx='71' cy='184' rx='19' ry='34' transform='rotate(-50 71 184)'/%3E%3Cellipse cx='126' cy='216' rx='18' ry='33' transform='rotate(48 126 216)'/%3E%3Cellipse cx='79' cy='252' rx='17' ry='31' transform='rotate(-46 79 252)'/%3E%3C/g%3E%3Cg fill='%23a1ad8f' fill-opacity='.46'%3E%3Cellipse cx='128' cy='42' rx='13' ry='25' transform='rotate(46 128 42)'/%3E%3Cellipse cx='49' cy='155' rx='13' ry='25' transform='rotate(-60 49 155)'/%3E%3Cellipse cx='142' cy='174' rx='12' ry='24' transform='rotate(55 142 174)'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.site-hero::before {
+  left: -70px;
+  top: 118px;
+  transform: rotate(-11deg);
+  animation: within-leaf-sway-left 11s ease-in-out infinite alternate;
+}
+
+.site-hero::after {
+  right: -58px;
+  top: 64px;
+  transform: scaleX(-1) rotate(-5deg);
+  opacity: 0.19;
+  animation: within-leaf-sway-right 13s ease-in-out infinite alternate;
+}
+
+.intro-band::before {
+  left: -96px;
+  bottom: -118px;
+  width: 180px;
+  height: 280px;
+  opacity: 0.17;
+  transform: rotate(-26deg);
+}
+
+.feature-section::before {
+  right: -92px;
+  top: 78px;
+  width: 190px;
+  height: 300px;
+  opacity: 0.16;
+  transform: scaleX(-1) rotate(-20deg);
+}
+
+.booking-section::after {
+  left: -105px;
+  bottom: -126px;
+  width: 190px;
+  height: 300px;
+  opacity: 0.14;
+  transform: rotate(24deg);
+}
+
+.site-hero > *,
+.intro-band > *,
+.feature-section > *,
+.booking-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.website-nav,
+.hero-portrait-card,
+.intro-band,
+.service-card,
+.audience-card,
+.pathway-card,
+.resource-card,
+.feature-card,
+.booking-card,
+.availability-card,
+.waitlist-form,
+details {
+  backdrop-filter: blur(4px);
+}
+
+.hero-portrait-card,
+.intro-band,
+.large-feature,
+.booking-card {
+  border-radius: 34px 74px 34px 54px;
+}
+
+.service-card:nth-child(4n + 1),
+.audience-card:nth-child(4n + 1),
+.resource-card:nth-child(3n + 1) {
+  border-radius: 30px 62px 30px 46px;
+}
+
+.service-card:nth-child(4n + 2),
+.audience-card:nth-child(4n + 2),
+.resource-card:nth-child(3n + 2) {
+  border-radius: 54px 30px 52px 30px;
+}
+
+.service-card:nth-child(4n + 3),
+.audience-card:nth-child(4n + 3),
+.resource-card:nth-child(3n + 3) {
+  border-radius: 28px 48px 64px 34px;
+}
+
+.service-card,
+.audience-card,
+.pathway-card,
+.resource-card {
+  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+}
+
+.service-card:hover,
+.audience-card:hover,
+.pathway-card:hover,
+.resource-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(87, 111, 88, 0.22);
+  box-shadow: 0 18px 44px rgba(63, 72, 54, 0.11);
+}
+
+.primary-action,
+.secondary-action {
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px 999px 999px 30px;
+}
+
+.primary-action::after,
+.secondary-action::after {
+  content: "↗";
+  margin-left: 8px;
+  font-size: .9em;
+  transform: rotate(-8deg);
+  opacity: .68;
+  transition: transform .22s ease;
+}
+
+.primary-action:hover::after,
+.secondary-action:hover::after {
+  transform: translate(2px, -2px) rotate(-8deg);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 18px;
+  height: 10px;
+  border-radius: 100% 0 100% 0;
+  background: linear-gradient(135deg, #7d9477, #a7b69a);
+  transform: rotate(-22deg);
+  box-shadow: 9px 4px 0 -2px rgba(125, 148, 119, 0.5);
+}
+
+.trust-row span,
+.service-card > span,
+.pathway-card > span,
+.availability-card > span {
+  border-radius: 999px 999px 999px 18px;
+}
+
+.muted-section {
+  border-radius: 42px 82px 42px 66px;
+  padding-left: clamp(20px, 4vw, 44px);
+  padding-right: clamp(20px, 4vw, 44px);
+  padding-bottom: clamp(34px, 5vw, 54px);
+  background:
+    radial-gradient(circle at 88% 14%, rgba(148, 167, 137, 0.12), transparent 18rem),
+    rgba(242, 238, 226, 0.48);
+}
+
+@keyframes within-leaf-sway-left {
+  from { transform: rotate(-13deg) translate3d(0, 0, 0); }
+  to { transform: rotate(-7deg) translate3d(8px, 4px, 0); }
+}
+
+@keyframes within-leaf-sway-right {
+  from { transform: scaleX(-1) rotate(-7deg) translate3d(0, 0, 0); }
+  to { transform: scaleX(-1) rotate(-2deg) translate3d(-7px, 5px, 0); }
+}
+
+@media (max-width: 900px) {
+  .site-hero::before {
+    left: -110px;
+    top: 160px;
+    opacity: .16;
+  }
+
+  .site-hero::after {
+    right: -118px;
+    top: 82px;
+    opacity: .13;
+  }
+
+  .intro-band::before,
+  .feature-section::before,
+  .booking-section::after {
+    opacity: .1;
+  }
+}
+
+@media (max-width: 760px) {
+  .site-hero::before,
+  .site-hero::after {
+    width: 150px;
+    height: 240px;
+  }
+
+  .site-hero::before {
+    left: -96px;
+    top: 180px;
+  }
+
+  .site-hero::after {
+    right: -104px;
+    top: 104px;
+  }
+
+  .hero-portrait-card,
+  .intro-band,
+  .large-feature,
+  .booking-card,
+  .muted-section {
+    border-radius: 28px 46px 30px 38px;
+  }
+
+  .primary-action,
+  .secondary-action {
+    border-radius: 999px 999px 999px 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-hero::before,
+  .site-hero::after {
+    animation: none !important;
+  }
+
+  .service-card,
+  .audience-card,
+  .pathway-card,
+  .resource-card,
+  .primary-action,
+  .secondary-action {
+    transition: none !important;
+  }
+}
